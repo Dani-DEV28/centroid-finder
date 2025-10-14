@@ -1,4 +1,8 @@
 import static org.junit.Assert.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 
 public class DfsBinaryGroupFinderTest {
@@ -12,5 +16,10 @@ public class DfsBinaryGroupFinderTest {
                 { 0, 0, 0, 0, 0, 0, 0 }
         };
 
+        Group testGroup1 = new Group(1, new Coordinate(3, 2));
+        BinaryGroupFinder groupFinder = new DfsBinaryGroupFinder();
+        List<Group> groups = groupFinder.findConnectedGroups(image);
+
+        assertTrue(testGroup1.equals(groups.get(0)));
     }
 }
