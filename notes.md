@@ -1,5 +1,16 @@
 ## Wave 1 Notes
 
+- `distanceFinder` (`EuclideanColorDistance`)
+
+- `binarizer` (`DistanceImageBinarizer`)
+  - References: 
+    - `binaryArray` (`inputImage`)
+      - `binaryImage` (`binaryArray`)
+
+- `groupFinder` (`BinarizingImageGroupFinder`, `DfsBinaryGroupFinder`)
+  - References:
+    - `groups` (`inputImage`)
+
 ## Wave 2 Notes
 
 ## Wave 3 Notes
