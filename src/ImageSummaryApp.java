@@ -33,7 +33,7 @@ public class ImageSummaryApp {
         if (args.length < 3) {
             System.out.println("Usage: java ImageSummaryApp <input_image> <hex_target_color> <threshold>");
             return;
-        }
+        } //can be ignore, but just checking is parameter are present
         
         String inputImagePath = args[0];
         String hexTargetColor = args[1];
