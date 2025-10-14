@@ -33,7 +33,7 @@ public class DfsBinaryGroupFinder implements BinaryGroupFinder {
     */
 
     public static void main(String[] args) {
-        int[][] wall = {
+        int[][] image = {
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
             {0, 1, 1, 0, 0, 0, 0, 0, 0, 0}, // sticky note 1
             {0, 1, 1, 0, 0, 0, 0, 0, 0, 0},
@@ -46,6 +46,32 @@ public class DfsBinaryGroupFinder implements BinaryGroupFinder {
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
         };
 
+        int [][] move = {
+            {0,1},
+            {0,-1},
+            {1,0},
+            {-1,0}
+        };
+
+        for (int i = 0; i < image.length; i++) {
+            for (int j = 0; j < image[0].length; j++) {
+                if ((i == 0 || j == 0 || i == image.length - 1 || j == image[0].length - 1) && image[i][j] == 1) {
+                    List<> somList = (dfs(image, i, j, move), new Coordinate(i, j));
+                }
+            }
+        }
+    }
+
+    private static void dfs(int[][] grid, int i, int j, int[][] move) {
+        if (i < 0 || i >= grid.length || j < 0 || j >= grid[0].length || grid[i][j] == 0) {
+            return;
+        }
+
+        grid[i][j] = 0;
+
+        for (int[] dir : move) {
+            dfs(grid, i + dir[0], j + dir[1], move);
+        }
     }
 
     @Override
