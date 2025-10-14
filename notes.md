@@ -13,6 +13,8 @@
 
 ## Wave 2 Notes
 
+We will be using lists
+
 ## Wave 3 Notes
 
 ## Wave 4 Notes
