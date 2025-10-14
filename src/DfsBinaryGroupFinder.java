@@ -31,6 +31,23 @@ public class DfsBinaryGroupFinder implements BinaryGroupFinder {
     * @param image a rectangular 2D array containing only 1s and 0s
     * @return the found groups of connected pixels in descending order
     */
+
+    public static void main(String[] args) {
+        int[][] wall = {
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 1, 1, 0, 0, 0, 0, 0, 0, 0}, // sticky note 1
+            {0, 1, 1, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 1, 1, 0, 0, 0}, // sticky note 2
+            {0, 0, 0, 0, 0, 1, 1, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        };
+
+    }
+
     @Override
     public List<Group> findConnectedGroups(int[][] image) {
         return null;
