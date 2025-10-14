@@ -36,4 +36,21 @@ public class DfsBinaryGroupFinderTest {
         BinaryGroupFinder groupFinder = new DfsBinaryGroupFinder();
         assertThrows(NullPointerException.class, () -> groupFinder.findConnectedGroups(image));
     }
+
+    @Test
+    void testFindConnectedGroupsOneGroupSizeFour() {
+        int[][] image = {
+                { 0, 0, 0, 0, 0, 0, 0 },
+                { 0, 0, 0, 0, 0, 0, 0 },
+                { 0, 0, 0, 1, 1, 0, 0 },
+                { 0, 0, 0, 1, 1, 0, 0 },
+                { 0, 0, 0, 0, 0, 0, 0 }
+        };
+
+        Group testGroup1 = new Group(4, new Coordinate(3, 2));
+        BinaryGroupFinder groupFinder = new DfsBinaryGroupFinder();
+        List<Group> groups = groupFinder.findConnectedGroups(image);
+
+        assertTrue(testGroup1.equals(groups.get(0)));
+    }
 }
