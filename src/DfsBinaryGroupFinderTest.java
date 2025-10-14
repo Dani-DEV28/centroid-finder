@@ -22,4 +22,18 @@ public class DfsBinaryGroupFinderTest {
 
         assertTrue(testGroup1.equals(groups.get(0)));
     }
+
+    @Test
+    void testFindConnectedGroupsNullList() {
+        int[][] image = {
+                { 0, 0, 0, 0, 0, 0, 0 },
+                { 0, 0, 0, 0, 0, 0, 0 },
+                { 0, 0, 0, 0, 0, 0, 0 },
+                { 0, 0, 0, 0, 0, 0, 0 },
+                { 0, 0, 0, 0, 0, 0, 0 }
+        };
+
+        BinaryGroupFinder groupFinder = new DfsBinaryGroupFinder();
+        assertThrows(NullPointerException.class, () -> groupFinder.findConnectedGroups(image));
+    }
 }
