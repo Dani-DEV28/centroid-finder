@@ -1,4 +1,7 @@
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class DfsBinaryGroupFinder implements BinaryGroupFinder {
    /**
@@ -53,25 +56,30 @@ public class DfsBinaryGroupFinder implements BinaryGroupFinder {
             {-1,0}
         };
 
+        List<Integer> trackerSize = new ArrayList<>();
+
         for (int i = 0; i < image.length; i++) {
             for (int j = 0; j < image[0].length; j++) {
                 if ((i == 0 || j == 0 || i == image.length - 1 || j == image[0].length - 1) && image[i][j] == 1) {
-                    List<> somList = (dfs(image, i, j, move), new Coordinate(i, j));
+                    trackerSize.add(dfs(image, i, j, move));
                 }
             }
         }
     }
 
-    private static void dfs(int[][] grid, int i, int j, int[][] move) {
+    private static int dfs(int[][] grid, int i, int j, int[][] move) {
         if (i < 0 || i >= grid.length || j < 0 || j >= grid[0].length || grid[i][j] == 0) {
-            return;
+            return 0;
         }
 
         grid[i][j] = 0;
+        int localCount = 1;
 
         for (int[] dir : move) {
-            dfs(grid, i + dir[0], j + dir[1], move);
+            localCount += dfs(grid, i + dir[0], j + dir[1], move);
         }
+
+        return localCount;
     }
 
     @Override
