@@ -68,8 +68,22 @@ public class DfsBinaryGroupFinder implements BinaryGroupFinder {
         for (int col = 0; col < image.length; col++) {
             for (int row = 0; row < image[0].length; row++) {
                 if (image[col][row] == 1) {
+                    List<Coordinate> pixels = new ArrayList<>();
+                    
                     Coordinate curr = new Coordinate(col,row);
-                    Group location = new Group(dfs(image, curr, move), curr);
+                    int size = dfs(image, curr, move, pixels);
+
+                    int sumX = 0;
+                    int sumY = 0;
+
+                    for (Coordinate c : pixels) {
+                        sumX += c.y();
+                        sumY += c.x();
+                    }
+                    int centroidX = sumX / size;
+                    int centroidY = sumY / size;
+
+                    Group location = new Group(size, new Coordinate(centroidY, centroidX));
                     tracker.add(location);
                 }
             }
@@ -79,16 +93,17 @@ public class DfsBinaryGroupFinder implements BinaryGroupFinder {
         return tracker;
     }
     
-    private static int dfs(int[][] grid, Coordinate curr, int[][] move) {
+    private static int dfs(int[][] grid, Coordinate curr, int[][] move, List<Coordinate> pixels) {
         if (curr.x() < 0 || curr.x() >= grid.length || curr.y() < 0 || curr.y() >= grid[0].length || grid[curr.x()][curr.y()] == 0) {
             return 0;
         }
 
         grid[curr.x()][curr.y()] = 0;
+        pixels.add(curr);
         int localCount = 1;
 
         for (int[] dir : move) {
-            localCount += dfs(grid, new Coordinate(curr.x() + dir[0], curr.y() + dir[1]), move);
+            localCount += dfs(grid, new Coordinate(curr.x() + dir[0], curr.y() + dir[1]), move, pixels);
         }
 
         return localCount;
