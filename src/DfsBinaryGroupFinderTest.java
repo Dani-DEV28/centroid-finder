@@ -16,7 +16,7 @@ public class DfsBinaryGroupFinderTest {
                 { 0, 0, 0, 0, 0, 0, 0 }
         };
 
-        Group testGroup1 = new Group(1, new Coordinate(2, 3));
+        Group testGroup1 = new Group(1, new Coordinate(3, 2));
         BinaryGroupFinder groupFinder = new DfsBinaryGroupFinder();
         List<Group> groups = groupFinder.findConnectedGroups(image);
 
@@ -59,17 +59,31 @@ public class DfsBinaryGroupFinderTest {
     }
 
     @Test
-    void testFindConnectedGroupsNullList() {
+    void testFindConnectedGroupsIllegalImage1() {
         int[][] image = {
                 { 0, 0, 0, 0, 0, 0, 0 },
-                { 0, 0, 0, 0, 0, 0, 0 },
+                { 0, 0, -1, 0, 0, 0, 0 },
                 { 0, 0, 0, 0, 0, 0, 0 },
                 { 0, 0, 0, 0, 0, 0, 0 },
                 { 0, 0, 0, 0, 0, 0, 0 }
         };
 
         BinaryGroupFinder groupFinder = new DfsBinaryGroupFinder();
-        assertThrows(NullPointerException.class, () -> groupFinder.findConnectedGroups(image));
+        assertThrows(IllegalArgumentException.class, () -> groupFinder.findConnectedGroups(image));
+    }
+
+    @Test
+    void testFindConnectedGroupsIllegalImage2() {
+        int[][] image = {
+                { 0, 0, 0, 0, 0, 0, 0 },
+                { 0, 0, 0, 0, 0, 0, 0 },
+                { 0, 0, 0, 3, 0, 0, 0 },
+                { 0, 0, 0, 0, 0, 0, 0 },
+                { 0, 0, 0, 0, 0, 0, 0 }
+        };
+
+        BinaryGroupFinder groupFinder = new DfsBinaryGroupFinder();
+        assertThrows(IllegalArgumentException.class, () -> groupFinder.findConnectedGroups(image));
     }
 
     @Test
@@ -82,7 +96,7 @@ public class DfsBinaryGroupFinderTest {
                 { 0, 0, 0, 0, 0, 0, 0 }
         };
 
-        Group testGroup1 = new Group(4, new Coordinate(2, 3));
+        Group testGroup1 = new Group(4, new Coordinate(3, 2));
         BinaryGroupFinder groupFinder = new DfsBinaryGroupFinder();
         List<Group> groups = groupFinder.findConnectedGroups(image);
 
@@ -99,7 +113,7 @@ public class DfsBinaryGroupFinderTest {
                 { 0, 0, 0, 0, 1, 0, 0 }
         };
 
-        Group testGroup1 = new Group(4, new Coordinate(2, 3));
+        Group testGroup1 = new Group(5, new Coordinate(3, 2));
         Group testGroup2 = new Group(3, new Coordinate(0, 0));
         BinaryGroupFinder groupFinder = new DfsBinaryGroupFinder();
         List<Group> groups = groupFinder.findConnectedGroups(image);
@@ -119,15 +133,15 @@ public class DfsBinaryGroupFinderTest {
         };
 
         Group testGroup1 = new Group(4, new Coordinate(0, 0));
-        Group testGroup2 = new Group(4, new Coordinate(0, 5));
-        Group testGroup3 = new Group(4, new Coordinate(3, 0));
-        Group testGroup4 = new Group(4, new Coordinate(3, 5));
+        Group testGroup2 = new Group(4, new Coordinate(5, 0));
+        Group testGroup3 = new Group(4, new Coordinate(0, 3));
+        Group testGroup4 = new Group(4, new Coordinate(5, 3));
         BinaryGroupFinder groupFinder = new DfsBinaryGroupFinder();
         List<Group> groups = groupFinder.findConnectedGroups(image);
 
         assertTrue(testGroup4.equals(groups.get(0)));
         assertTrue(testGroup2.equals(groups.get(1)));
-        assertTrue(testGroup3.equals(groups.get(0)));
-        assertTrue(testGroup1.equals(groups.get(1)));
+        assertTrue(testGroup3.equals(groups.get(2)));
+        assertTrue(testGroup1.equals(groups.get(3)));
     }
 }
