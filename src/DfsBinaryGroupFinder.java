@@ -1,7 +1,7 @@
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Collections;
 import java.util.List;
-import java.util.Set;
+
 
 public class DfsBinaryGroupFinder implements BinaryGroupFinder {
     /**
@@ -41,56 +41,56 @@ public class DfsBinaryGroupFinder implements BinaryGroupFinder {
      * @return the found groups of connected pixels in descending order
      */
 
-    public static void main(String[] args) {
-        int[][] image = {
-                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-                { 0, 1, 1, 0, 0, 0, 0, 0, 0, 0 }, // sticky note 1
-                { 0, 1, 1, 0, 0, 0, 0, 0, 0, 0 },
-                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-                { 0, 0, 0, 0, 0, 1, 1, 0, 0, 0 }, // sticky note 2
-                { 0, 0, 0, 0, 0, 1, 1, 0, 0, 0 },
-                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+    @Override
+    public List<Group> findConnectedGroups(int[][] image) {
+        if (image == null) {
+            throw new NullPointerException("Image array is null");
+        }
+        int width = image[0].length;
+        for (int[] row : image) {
+            if (row == null) {
+                throw new NullPointerException("Row in image is null");
+            }
+            if (row.length != width) {
+                throw new IllegalArgumentException("Image is not rectangular");
+            }
+        }
+
+        int [][] move = {
+            {0,1},
+            {0,-1},
+            {1,0},
+            {-1,0}
         };
 
-        int[][] move = {
-                { 0, 1 },
-                { 0, -1 },
-                { 1, 0 },
-                { -1, 0 }
-        };
-
-        List<Integer> trackerSize = new ArrayList<>();
-
-        for (int i = 0; i < image.length; i++) {
-            for (int j = 0; j < image[0].length; j++) {
-                if ((i == 0 || j == 0 || i == image.length - 1 || j == image[0].length - 1) && image[i][j] == 1) {
-                    trackerSize.add(dfs(image, i, j, move));
+        List<Group> tracker = new ArrayList<>();
+        
+        for (int col = 0; col < image.length; col++) {
+            for (int row = 0; row < image[0].length; row++) {
+                if (image[col][row] == 1) {
+                    Coordinate curr = new Coordinate(col,row);
+                    Group location = new Group(dfs(image, curr, move), curr);
+                    tracker.add(location);
                 }
             }
         }
-    }
 
-    private static int dfs(int[][] grid, int i, int j, int[][] move) {
-        if (i < 0 || i >= grid.length || j < 0 || j >= grid[0].length || grid[i][j] == 0) {
+        tracker.sort(Collections.reverseOrder());
+        return tracker;
+    }
+    
+    private static int dfs(int[][] grid, Coordinate curr, int[][] move) {
+        if (curr.x() < 0 || curr.x() >= grid.length || curr.y() < 0 || curr.y() >= grid[0].length || grid[curr.x()][curr.y()] == 0) {
             return 0;
         }
 
-        grid[i][j] = 0;
+        grid[curr.x()][curr.y()] = 0;
         int localCount = 1;
 
         for (int[] dir : move) {
-            localCount += dfs(grid, i + dir[0], j + dir[1], move);
+            localCount += dfs(grid, new Coordinate(curr.x() + dir[0], curr.y() + dir[1]), move);
         }
 
         return localCount;
     }
-
-    @Override
-    public List<Group> findConnectedGroups(int[][] image) {
-        return null;
-    }
-
 }
