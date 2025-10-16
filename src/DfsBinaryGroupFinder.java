@@ -2,7 +2,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-
 public class DfsBinaryGroupFinder implements BinaryGroupFinder {
     /**
      * Finds connected pixel groups of 1s in an integer array representing a binary
@@ -56,19 +55,19 @@ public class DfsBinaryGroupFinder implements BinaryGroupFinder {
             }
         }
 
-        int [][] move = {
-            {0,1},
-            {0,-1},
-            {1,0},
-            {-1,0}
+        int[][] move = {
+                { 0, 1 },
+                { 0, -1 },
+                { 1, 0 },
+                { -1, 0 }
         };
 
         List<Group> tracker = new ArrayList<>();
-        
+
         for (int col = 0; col < image.length; col++) {
             for (int row = 0; row < image[0].length; row++) {
                 if (image[col][row] == 1) {
-                    Coordinate curr = new Coordinate(col,row);
+                    Coordinate curr = new Coordinate(col, row);
                     Group location = new Group(dfs(image, curr, move), curr);
                     tracker.add(location);
                 }
@@ -78,9 +77,10 @@ public class DfsBinaryGroupFinder implements BinaryGroupFinder {
         tracker.sort(Collections.reverseOrder());
         return tracker;
     }
-    
+
     private static int dfs(int[][] grid, Coordinate curr, int[][] move) {
-        if (curr.x() < 0 || curr.x() >= grid.length || curr.y() < 0 || curr.y() >= grid[0].length || grid[curr.x()][curr.y()] == 0) {
+        if (curr.x() < 0 || curr.x() >= grid.length || curr.y() < 0 || curr.y() >= grid[0].length
+                || grid[curr.x()][curr.y()] == 0) {
             return 0;
         }
 
