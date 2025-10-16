@@ -24,6 +24,41 @@ public class DfsBinaryGroupFinderTest {
     }
 
     @Test
+    void testNullImageThrowsNullPointerException() {
+        BinaryGroupFinder groupFinder = new DfsBinaryGroupFinder();
+        assertThrows(NullPointerException.class, () -> {
+            groupFinder.findConnectedGroups(null);
+        });
+    }
+
+        @Test
+    void testNullRowThrowsNullPointerException() {
+        int[][] image = {
+             {1, 0, 1},
+             null,
+             {0, 1, 0}
+        };
+
+        BinaryGroupFinder groupFinder = new DfsBinaryGroupFinder();
+        assertThrows(NullPointerException.class, () -> {
+            groupFinder.findConnectedGroups(image);
+        });
+    }
+
+    @Test
+    void testNonRectangularArrayThrowsIllegalArgumentException() {
+        int[][] image = {
+            {1, 0, 1},
+            {0, 1}
+        }; // shorter row
+
+        BinaryGroupFinder groupFinder = new DfsBinaryGroupFinder();
+        assertThrows(IllegalArgumentException.class, () -> {
+            groupFinder.findConnectedGroups(image);
+        });
+    }
+
+    @Test
     void testFindConnectedGroupsNullList() {
         int[][] image = {
                 { 0, 0, 0, 0, 0, 0, 0 },
