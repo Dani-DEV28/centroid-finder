@@ -43,6 +43,19 @@ public class DfsBinaryGroupFinder implements BinaryGroupFinder {
 
     @Override
     public List<Group> findConnectedGroups(int[][] image) {
+        if (image == null) {
+            throw new NullPointerException("Image array is null");
+        }
+        int width = image[0].length;
+        for (int[] row : image) {
+            if (row == null) {
+                throw new NullPointerException("Row in image is null");
+            }
+            if (row.length != width) {
+                throw new IllegalArgumentException("Image is not rectangular");
+            }
+        }
+
         int [][] move = {
             {0,1},
             {0,-1},
@@ -54,7 +67,7 @@ public class DfsBinaryGroupFinder implements BinaryGroupFinder {
         
         for (int col = 0; col < image.length; col++) {
             for (int row = 0; row < image[0].length; row++) {
-                if ((col == 0 || row == 0 || col == image.length - 1 || row == image[0].length - 1) && image[col][row] == 1) {
+                if (image[col][row] == 1) {
                     Coordinate curr = new Coordinate(col,row);
                     Group location = new Group(dfs(image, curr, move), curr);
                     tracker.add(location);
