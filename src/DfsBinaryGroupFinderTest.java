@@ -1,6 +1,8 @@
 import static org.junit.Assert.*;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import org.junit.jupiter.api.Test;
 
 public class DfsBinaryGroupFinderTest {
@@ -29,12 +31,12 @@ public class DfsBinaryGroupFinderTest {
         });
     }
 
-    @Test
+        @Test
     void testNullRowThrowsNullPointerException() {
         int[][] image = {
-                { 1, 0, 1 },
-                null,
-                { 0, 1, 0 }
+             {1, 0, 1},
+             null,
+             {0, 1, 0}
         };
 
         BinaryGroupFinder groupFinder = new DfsBinaryGroupFinder();
@@ -46,8 +48,8 @@ public class DfsBinaryGroupFinderTest {
     @Test
     void testNonRectangularArrayThrowsIllegalArgumentException() {
         int[][] image = {
-                { 1, 0, 1 },
-                { 0, 1 }
+            {1, 0, 1},
+            {0, 1}
         }; // shorter row
 
         BinaryGroupFinder groupFinder = new DfsBinaryGroupFinder();
@@ -60,7 +62,7 @@ public class DfsBinaryGroupFinderTest {
     void testFindConnectedGroupsNullList() {
         int[][] image = {
                 { 0, 0, 0, 0, 0, 0, 0 },
-                { 0, 0, 0, 3, 0, 0, 0 },
+                { 0, 0, 0, 0, 0, 0, 0 },
                 { 0, 0, 0, 0, 0, 0, 0 },
                 { 0, 0, 0, 0, 0, 0, 0 },
                 { 0, 0, 0, 0, 0, 0, 0 }

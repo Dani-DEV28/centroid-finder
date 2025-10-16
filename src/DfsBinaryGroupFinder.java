@@ -61,12 +61,12 @@ public class DfsBinaryGroupFinder implements BinaryGroupFinder {
 
         List<Group> tracker = new ArrayList<>();
 
-        for (int col = 0; col < image.length; col++) {
-            for (int row = 0; row < image[0].length; row++) {
-                if (image[col][row] == 1) {
+        for (int row = 0; row < image.length; row++) {
+            for (int col = 0; col < image[0].length; col++) {
+                if (image[row][col] == 1) {
                     List<Coordinate> pixels = new ArrayList<>();
                     
-                    Coordinate curr = new Coordinate(col,row);
+                    Coordinate curr = new Coordinate(row, col);
                     int size = dfs(image, curr, move, pixels);
 
                     int sumX = 0;
@@ -90,7 +90,9 @@ public class DfsBinaryGroupFinder implements BinaryGroupFinder {
     }
     
     private static int dfs(int[][] grid, Coordinate curr, int[][] move, List<Coordinate> pixels) {
-        if (curr.x() < 0 || curr.x() >= grid.length || curr.y() < 0 || curr.y() >= grid[0].length || grid[curr.x()][curr.y()] == 0) {
+        if (curr.x() < 0 || curr.x() >= grid.length || 
+            curr.y() < 0 || curr.y() >= grid[0].length || 
+            grid[curr.y()][curr.x()] == 0) {
             return 0;
         }
 

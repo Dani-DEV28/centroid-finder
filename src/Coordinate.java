@@ -6,4 +6,4 @@
  * 
  * For example, (row:4, column:7) corresponds to (x:7, y:4).
  */
-public record Coordinate(int x, int y) {}
+public record Coordinate(int y, int x) {}
