@@ -79,7 +79,7 @@ public class DfsBinaryGroupFinder implements BinaryGroupFinder {
                     int centroidX = sumX / size;
                     int centroidY = sumY / size;
 
-                    Group location = new Group(size, new Coordinate(centroidY, centroidX));
+                    Group location = new Group(size, new Coordinate(centroidX, centroidY));
                     tracker.add(location);
                 }
             }
@@ -92,7 +92,7 @@ public class DfsBinaryGroupFinder implements BinaryGroupFinder {
     private static int dfs(int[][] grid, Coordinate curr, int[][] move, List<Coordinate> pixels) {
         if (curr.x() < 0 || curr.x() >= grid.length || 
             curr.y() < 0 || curr.y() >= grid[0].length || 
-            grid[curr.y()][curr.x()] == 0) {
+            grid[curr.x()][curr.y()] == 0) {
             return 0;
         }
 

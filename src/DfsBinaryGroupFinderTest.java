@@ -82,7 +82,7 @@ public class DfsBinaryGroupFinderTest {
                 { 0, 0, 0, 0, 0, 0, 0 }
         };
 
-        Group testGroup1 = new Group(4, new Coordinate(3, 2));
+        Group testGroup1 = new Group(4, new Coordinate(3,2));
         BinaryGroupFinder groupFinder = new DfsBinaryGroupFinder();
         List<Group> groups = groupFinder.findConnectedGroups(image);
 
@@ -99,7 +99,7 @@ public class DfsBinaryGroupFinderTest {
                 { 0, 0, 0, 0, 1, 0, 0 }
         };
 
-        Group testGroup1 = new Group(4, new Coordinate(3, 2));
+        Group testGroup1 = new Group(5, new Coordinate(3, 2));
         Group testGroup2 = new Group(3, new Coordinate(0, 0));
         BinaryGroupFinder groupFinder = new DfsBinaryGroupFinder();
         List<Group> groups = groupFinder.findConnectedGroups(image);
@@ -127,7 +127,7 @@ public class DfsBinaryGroupFinderTest {
 
         assertTrue(testGroup4.equals(groups.get(0)));
         assertTrue(testGroup2.equals(groups.get(1)));
-        assertTrue(testGroup3.equals(groups.get(0)));
-        assertTrue(testGroup1.equals(groups.get(1)));
+        assertTrue(testGroup3.equals(groups.get(2)));
+        assertTrue(testGroup1.equals(groups.get(3)));
     }
 }
