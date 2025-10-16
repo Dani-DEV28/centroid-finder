@@ -16,7 +16,7 @@ public class DfsBinaryGroupFinderTest {
                 { 0, 0, 0, 0, 0, 0, 0 }
         };
 
-        Group testGroup1 = new Group(1, new Coordinate(3, 2));
+        Group testGroup1 = new Group(1, new Coordinate(2, 3));
         BinaryGroupFinder groupFinder = new DfsBinaryGroupFinder();
         List<Group> groups = groupFinder.findConnectedGroups(image);
 
@@ -31,12 +31,12 @@ public class DfsBinaryGroupFinderTest {
         });
     }
 
-        @Test
+    @Test
     void testNullRowThrowsNullPointerException() {
         int[][] image = {
-             {1, 0, 1},
-             null,
-             {0, 1, 0}
+                { 1, 0, 1 },
+                null,
+                { 0, 1, 0 }
         };
 
         BinaryGroupFinder groupFinder = new DfsBinaryGroupFinder();
@@ -48,8 +48,8 @@ public class DfsBinaryGroupFinderTest {
     @Test
     void testNonRectangularArrayThrowsIllegalArgumentException() {
         int[][] image = {
-            {1, 0, 1},
-            {0, 1}
+                { 1, 0, 1 },
+                { 0, 1 }
         }; // shorter row
 
         BinaryGroupFinder groupFinder = new DfsBinaryGroupFinder();
@@ -82,7 +82,7 @@ public class DfsBinaryGroupFinderTest {
                 { 0, 0, 0, 0, 0, 0, 0 }
         };
 
-        Group testGroup1 = new Group(4, new Coordinate(3, 2));
+        Group testGroup1 = new Group(4, new Coordinate(2, 3));
         BinaryGroupFinder groupFinder = new DfsBinaryGroupFinder();
         List<Group> groups = groupFinder.findConnectedGroups(image);
 
@@ -99,7 +99,7 @@ public class DfsBinaryGroupFinderTest {
                 { 0, 0, 0, 0, 1, 0, 0 }
         };
 
-        Group testGroup1 = new Group(4, new Coordinate(3, 2));
+        Group testGroup1 = new Group(4, new Coordinate(2, 3));
         Group testGroup2 = new Group(3, new Coordinate(0, 0));
         BinaryGroupFinder groupFinder = new DfsBinaryGroupFinder();
         List<Group> groups = groupFinder.findConnectedGroups(image);
@@ -119,9 +119,9 @@ public class DfsBinaryGroupFinderTest {
         };
 
         Group testGroup1 = new Group(4, new Coordinate(0, 0));
-        Group testGroup2 = new Group(4, new Coordinate(5, 0));
-        Group testGroup3 = new Group(4, new Coordinate(0, 3));
-        Group testGroup4 = new Group(4, new Coordinate(5, 3));
+        Group testGroup2 = new Group(4, new Coordinate(0, 5));
+        Group testGroup3 = new Group(4, new Coordinate(3, 0));
+        Group testGroup4 = new Group(4, new Coordinate(3, 5));
         BinaryGroupFinder groupFinder = new DfsBinaryGroupFinder();
         List<Group> groups = groupFinder.findConnectedGroups(image);
 
