@@ -82,6 +82,10 @@ public class DfsBinaryGroupFinder implements BinaryGroupFinder {
                     Group location = new Group(size, new Coordinate(centroidX, centroidY));
                     tracker.add(location);
                 }
+
+                if(image[row][col] > 1 || image[row][col] < 0){
+                    throw new IllegalArgumentException("010010110, AHHH! IT IS " + image[row][col]);
+                }
             }
         }
 
