@@ -81,7 +81,8 @@ public class DfsBinaryGroupFinderTest {
         };
 
         BinaryGroupFinder groupFinder = new DfsBinaryGroupFinder();
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> groupFinder.findConnectedGroups(image));
+        Exception exception = assertThrows(IllegalArgumentException.class,
+                () -> groupFinder.findConnectedGroups(image));
         System.out.println(exception);
     }
 
