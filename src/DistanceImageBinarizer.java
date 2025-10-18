@@ -58,6 +58,32 @@ public class DistanceImageBinarizer implements ImageBinarizer {
      */
     @Override
     public BufferedImage toBufferedImage(int[][] image) {
-        return null;
+        int width = image.length;
+        int height = image[0].length;
+
+        for (int[] row : image) {
+            if (row == null) {
+                throw new NullPointerException("Row in binarizer image is null");
+            }
+            if (row.length != width) {
+                throw new IllegalArgumentException("Image is not rectangular");
+            }
+        }
+
+        BufferedImage craftedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                if(image[x][y] == 1){
+                    craftedImage.setRGB(x, y, 0xFFFFFF);
+                }else if(image[x][y] == 0){
+                    craftedImage.setRGB(x, y, 0x000000);
+                }else{
+                    throw new IllegalArgumentException("Not a binarizer image");
+                }
+            }
+        }
+
+        return craftedImage;
     }
 }
