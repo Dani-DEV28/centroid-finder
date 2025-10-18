@@ -1,6 +1,4 @@
 import static org.junit.Assert.*;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -83,7 +81,8 @@ public class DfsBinaryGroupFinderTest {
         };
 
         BinaryGroupFinder groupFinder = new DfsBinaryGroupFinder();
-        assertThrows(IllegalArgumentException.class, () -> groupFinder.findConnectedGroups(image));
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> groupFinder.findConnectedGroups(image));
+        System.out.println(exception);
     }
 
     @Test
