@@ -1,4 +1,5 @@
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
@@ -50,5 +51,23 @@ public class EuclideanColorDistanceTest {
         );
 
         assertEquals(expected, colorDistance.distance(colorA, colorB), 0.0001, "Mixed color distance mismatch");
+    }
+
+    @Test
+    void exceedBitHexValueNegative(){
+        int exceed = 0xFF000000;
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            colorDistance.distance(exceed, exceed);
+        });
+    }
+
+    @Test
+    void exceedBitHexValuePositive(){
+        int exceed = 0x7FFFFFFF;
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            colorDistance.distance(exceed, exceed);
+        });
     }
 }
