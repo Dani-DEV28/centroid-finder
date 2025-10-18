@@ -38,7 +38,7 @@ public class EuclideanColorDistance implements ColorDistanceFinder {
         return dist;
     }
 
-    private int convert(int color, int mask, int shift) {
+    private static int convert(int color, int mask, int shift) {
         int preShift = color & mask;
         return preShift >> shift;
     }
