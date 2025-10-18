@@ -20,6 +20,10 @@ public class EuclideanColorDistance implements ColorDistanceFinder {
      */
     @Override
     public double distance(int colorA, int colorB) {
+        if (colorA > 0xFFFFFF || colorB > 0xFFFFFF || colorA < 0 || colorB < 0) {
+            throw new IllegalArgumentException("Value exceeds 24-bit RGB range");
+        }
+
         int b1 = convert(colorA, 0x0000FF, 0);
         int b2 = convert(colorB, 0x0000FF, 0);
 
