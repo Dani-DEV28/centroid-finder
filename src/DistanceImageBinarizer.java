@@ -57,9 +57,9 @@ public class DistanceImageBinarizer implements ImageBinarizer {
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
                 if(image.getRGB(x,y) < 1){ //
-                    binarizedImage[x][y] = WHITE;
+                    binarizedImage[x][y] = 1;
                 }else{
-                    binarizedImage[x][y] = BLACK;
+                    binarizedImage[x][y] = 0;
                 }
             }
         }
