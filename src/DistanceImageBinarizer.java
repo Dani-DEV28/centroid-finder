@@ -12,6 +12,10 @@ import java.awt.image.BufferedImage;
  * The targetColor is represented as a 24-bit RGB integer in the form 0xRRGGBB.
  */
 public class DistanceImageBinarizer implements ImageBinarizer {
+
+    public static final int BLACK = 0xFFFFFF;
+    public static final int WHITE = 0x000000;
+
     private final ColorDistanceFinder distanceFinder;
     private final int threshold;
     private final int targetColor;
@@ -45,6 +49,21 @@ public class DistanceImageBinarizer implements ImageBinarizer {
      */
     @Override
     public int[][] toBinaryArray(BufferedImage image) {
+        int width = image.getWidth();
+        int height = image.getHeight();
+
+        int[][] binarizedImage = new int[width][height];
+
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                if(image.getRGB(x,y) < 1){ //
+                    binarizedImage[x][y] = WHITE;
+                }else{
+                    binarizedImage[x][y] = BLACK;
+                }
+            }
+        }
+
         return null;
     }
 
@@ -75,9 +94,9 @@ public class DistanceImageBinarizer implements ImageBinarizer {
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
                 if(image[x][y] == 1){
-                    craftedImage.setRGB(x, y, 0xFFFFFF);
+                    craftedImage.setRGB(x, y, WHITE);
                 }else if(image[x][y] == 0){
-                    craftedImage.setRGB(x, y, 0x000000);
+                    craftedImage.setRGB(x, y, BLACK);
                 }else{
                     throw new IllegalArgumentException("Not a binarizer image");
                 }
