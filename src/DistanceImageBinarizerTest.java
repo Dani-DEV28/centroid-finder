@@ -7,14 +7,17 @@ import org.junit.jupiter.api.Test;
 
 public class DistanceImageBinarizerTest {
 
+    private static final int WHITE = 0xFFFFFF;
+    private static final int BLACK = 0x000000;
+
     @Test
     void testToBufferedImageAllBlack() {
         int[][] image = {
-                { 0, 0, 0 },
-                { 0, 0, 0 }
+            { 0, 0, 0 },
+            { 0, 0, 0 }
         };
 
-        BufferedImage img = new BufferedImage(image.length, image[0].length, BufferedImage.TYPE_INT_RGB);
+        BufferedImage img = new DistanceImageBinarizer(null, 0, 0).toBufferedImage(image));
 
         for (int x = 0; x < image.length; x++) {
             for (int y = 0; y < image[x].length; y++) {
