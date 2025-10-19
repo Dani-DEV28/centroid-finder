@@ -10,14 +10,34 @@ public class DistanceImageBinarizerTest {
     private static final int WHITE = 0xFFFFFF;
     private static final int BLACK = 0x000000;
 
+    private final DistanceImageBinarizer binarizer = new DistanceImageBinarizer((a, b) -> 0, 0x000000, 0);
+
+    @Test
+    public void testValidBinaryImageConversion() {
+        int[][] binaryImage = {
+            {0, 1},
+            {1, 0}
+        };
+
+        BufferedImage result = binarizer.toBufferedImage(binaryImage);
+
+        assertEquals(2, result.getWidth());
+        assertEquals(2, result.getHeight());
+
+        assertEquals(0xFFFFFF, result.getRGB(0, 0) & 0xFFFFFF); // 0 -> BLACK constant
+        assertEquals(0x000000, result.getRGB(1, 0) & 0xFFFFFF); // 1 -> WHITE constant
+        assertEquals(0x000000, result.getRGB(0, 1) & 0xFFFFFF);
+        assertEquals(0xFFFFFF, result.getRGB(1, 1) & 0xFFFFFF);
+    }
+
     @Test
     void testToBufferedImageAllBlack() {
         int[][] image = {
-            { 0, 0, 0 },
-            { 0, 0, 0 }
+                { 0, 0, 0 },
+                { 0, 0, 0 }
         };
 
-        BufferedImage img = new DistanceImageBinarizer(null, 0, 0).toBufferedImage(image));
+        BufferedImage img = new DistanceImageBinarizer(null, 0, 0).toBufferedImage(image);
 
         for (int x = 0; x < image.length; x++) {
             for (int y = 0; y < image[x].length; y++) {
