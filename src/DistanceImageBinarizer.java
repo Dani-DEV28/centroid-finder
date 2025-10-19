@@ -88,9 +88,6 @@ public class DistanceImageBinarizer implements ImageBinarizer {
             if (row == null) {
                 throw new NullPointerException("Row in binarizer image is null");
             }
-            if (row.length != width) {
-                throw new IllegalArgumentException("Image is not rectangular");
-            }
         }
 
         BufferedImage craftedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);

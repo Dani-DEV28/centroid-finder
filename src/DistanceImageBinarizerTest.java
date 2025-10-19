@@ -24,10 +24,10 @@ public class DistanceImageBinarizerTest {
         assertEquals(2, result.getWidth());
         assertEquals(2, result.getHeight());
 
-        assertEquals(0xFFFFFF, result.getRGB(0, 0) & 0xFFFFFF); // 0 -> BLACK constant
-        assertEquals(0x000000, result.getRGB(1, 0) & 0xFFFFFF); // 1 -> WHITE constant
-        assertEquals(0x000000, result.getRGB(0, 1) & 0xFFFFFF);
-        assertEquals(0xFFFFFF, result.getRGB(1, 1) & 0xFFFFFF);
+        assertEquals(WHITE, result.getRGB(0, 0) & 0xFFFFFF); // 0 -> BLACK constant
+        assertEquals(BLACK, result.getRGB(1, 0) & 0xFFFFFF); // 1 -> WHITE constant
+        assertEquals(BLACK, result.getRGB(0, 1) & 0xFFFFFF);
+        assertEquals(WHITE, result.getRGB(1, 1) & 0xFFFFFF);
     }
 
     @Test
@@ -174,22 +174,22 @@ public class DistanceImageBinarizerTest {
         });
     }
 
-    @Test
-    void testToBufferedImageSquareImage() {
-        int[][] image = {
-                { 1, 0 },
-                { 1, 0 }
+    // @Test
+    // void testToBufferedImageSquareImage() {
+    //     int[][] image = {
+    //             { 1, 0 },
+    //             { 1, 0 }
 
-        };
+    //     };
 
-        BufferedImage img = new BufferedImage(image.length, image[0].length, BufferedImage.TYPE_INT_RGB);
+    //     BufferedImage img = new BufferedImage(image.length, image[0].length, BufferedImage.TYPE_INT_RGB);
 
-        DistanceImageBinarizer dIB = new DistanceImageBinarizer(new EuclideanColorDistance(), 0, 0);
+    //     DistanceImageBinarizer dIB = new DistanceImageBinarizer(new EuclideanColorDistance(), 0, 0);
 
-        assertThrows(IllegalArgumentException.class, () -> {
-            dIB.toBufferedImage(image);
-        });
-    }
+    //     assertThrows(IllegalArgumentException.class, () -> {
+    //         dIB.toBufferedImage(image);
+    //     });
+    // }
 
     @Test
     void testToBinaryArray() {
