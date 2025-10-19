@@ -129,7 +129,20 @@ public class DistanceImageBinarizerTest {
 
         };
 
-        BufferedImage img = new BufferedImage(image.length, image[0].length, BufferedImage.TYPE_INT_RGB);
+        DistanceImageBinarizer dIB = new DistanceImageBinarizer(new EuclideanColorDistance(), 0, 0);
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            dIB.toBufferedImage(image);
+        });
+    }
+
+    @Test
+    void testToBufferedImageJaggedRows() {
+        int[][] image = {
+                { 1, 0, 0, 1 },
+                { 1, 0, 3 }
+
+        };
 
         DistanceImageBinarizer dIB = new DistanceImageBinarizer(new EuclideanColorDistance(), 0, 0);
 
@@ -153,5 +166,11 @@ public class DistanceImageBinarizerTest {
         assertThrows(IllegalArgumentException.class, () -> {
             dIB.toBufferedImage(image);
         });
+    }
+
+    @Test
+    void testToBinaryArray() {
+        BufferedImage img = new BufferedImage(4, 3, BufferedImage.TYPE_INT_RGB);
+
     }
 }
