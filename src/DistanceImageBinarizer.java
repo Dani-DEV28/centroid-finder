@@ -66,9 +66,7 @@ public class DistanceImageBinarizer implements ImageBinarizer {
                 }
             }
         }
-
         return binarizedImage;
-    
     }
 
     /**

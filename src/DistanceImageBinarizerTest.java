@@ -24,8 +24,8 @@ public class DistanceImageBinarizerTest {
         assertEquals(2, result.getWidth());
         assertEquals(2, result.getHeight());
 
-        assertEquals(WHITE, result.getRGB(0, 0) & 0xFFFFFF); // 0 -> BLACK constant
-        assertEquals(BLACK, result.getRGB(1, 0) & 0xFFFFFF); // 1 -> WHITE constant
+        assertEquals(WHITE, result.getRGB(0, 0) & 0xFFFFFF);
+        assertEquals(BLACK, result.getRGB(1, 0) & 0xFFFFFF);
         assertEquals(BLACK, result.getRGB(0, 1) & 0xFFFFFF);
         assertEquals(WHITE, result.getRGB(1, 1) & 0xFFFFFF);
     }
@@ -135,7 +135,7 @@ public class DistanceImageBinarizerTest {
 
         };
 
-        BufferedImage img = new BufferedImage(image.length, image[0].length, BufferedImage.TYPE_INT_RGB);
+        // BufferedImage img = new BufferedImage(image.length, image[0].length, BufferedImage.TYPE_INT_RGB);
 
         DistanceImageBinarizer dIB = new DistanceImageBinarizer(new EuclideanColorDistance(), 0, 0);
 
@@ -191,9 +191,9 @@ public class DistanceImageBinarizerTest {
     //     });
     // }
 
-    @Test
-    void testToBinaryArray() {
-        BufferedImage img = new BufferedImage(4, 3, BufferedImage.TYPE_INT_RGB);
+    // @Test
+    // void testToBinaryArray() {
+    //     BufferedImage img = new BufferedImage(4, 3, BufferedImage.TYPE_INT_RGB);
 
-    }
+    // }
 }
