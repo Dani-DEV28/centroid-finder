@@ -54,9 +54,12 @@ public class DistanceImageBinarizer implements ImageBinarizer {
 
         int[][] binarizedImage = new int[width][height];
 
-        for (int x = 0; x < width; x++) {
-            for (int y = 0; y < height; y++) {
-                if(image.getRGB(x,y) < 1){ //
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                int rgb = image.getRGB(x, y) & 0xFFFFFF;
+                double distance = distanceFinder.distance(rgb, targetColor);
+
+                if(distance < threshold){
                     binarizedImage[x][y] = 1;
                 }else{
                     binarizedImage[x][y] = 0;
@@ -64,7 +67,8 @@ public class DistanceImageBinarizer implements ImageBinarizer {
             }
         }
 
-        return null;
+        return binarizedImage;
+    
     }
 
     /**
@@ -104,5 +108,6 @@ public class DistanceImageBinarizer implements ImageBinarizer {
         }
 
         return craftedImage;
+    
     }
 }

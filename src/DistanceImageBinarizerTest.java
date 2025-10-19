@@ -7,6 +7,9 @@ import org.junit.jupiter.api.Test;
 
 public class DistanceImageBinarizerTest {
 
+    private static final int WHITE = 0xFFFFFF;
+    private static final int BLACK = 0x000000;
+
     @Test
     void testToBufferedImageAllBlack() {
         int[][] image = {
@@ -126,7 +129,6 @@ public class DistanceImageBinarizerTest {
         int[][] image = {
                 { 1, 0, 0, 1 },
                 { 1, 0, 3, 0 }
-
         };
 
         DistanceImageBinarizer dIB = new DistanceImageBinarizer(new EuclideanColorDistance(), 0, 0);
@@ -140,7 +142,7 @@ public class DistanceImageBinarizerTest {
     void testToBufferedImageJaggedRows() {
         int[][] image = {
                 { 1, 0, 0, 1 },
-                { 1, 0, 3 }
+                { 1, 0, 0 }
 
         };
 
@@ -168,12 +170,12 @@ public class DistanceImageBinarizerTest {
         });
     }
 
-    @Test
-    void testToBinaryArray() {
-        BufferedImage img = new BufferedImage(4, 3, BufferedImage.TYPE_INT_RGB);
+    // @Test
+    // void testToBinaryArray() {
+    // BufferedImage img = new BufferedImage(4, 3, BufferedImage.TYPE_INT_RGB);
 
-        int width = img.getWidth();
-        int height = img.getHeight();
+    // int width = img.getWidth();
+    // int height = img.getHeight();
 
-    }
+    // }
 }
