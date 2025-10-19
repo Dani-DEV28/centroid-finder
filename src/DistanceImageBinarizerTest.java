@@ -172,5 +172,8 @@ public class DistanceImageBinarizerTest {
     void testToBinaryArray() {
         BufferedImage img = new BufferedImage(4, 3, BufferedImage.TYPE_INT_RGB);
 
+        int width = img.getWidth();
+        int height = img.getHeight();
+
     }
 }
