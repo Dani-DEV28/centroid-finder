@@ -143,31 +143,12 @@ public class DistanceImageBinarizerTest {
         });
     }
 
-    // @Test
-    // void testToBufferedImageSquareImage() {
-    // int[][] image = {
-    // { 1, 0 },
-    // { 1, 0 }
+    @Test
+    void testToBinaryArray() {
+        BufferedImage img = new BufferedImage(4, 3, BufferedImage.TYPE_INT_RGB);
 
-    // };
+        int width = img.getWidth();
+        int height = img.getHeight();
 
-    // BufferedImage img = new BufferedImage(image.length, image[0].length,
-    // BufferedImage.TYPE_INT_RGB);
-
-    // DistanceImageBinarizer dIB = new DistanceImageBinarizer(new
-    // EuclideanColorDistance(), 0, 0);
-
-    // assertThrows(IllegalArgumentException.class, () -> {
-    // dIB.toBufferedImage(image);
-    // });
-    // }
-
-    // @Test
-    // void testToBinaryArray() {
-    // BufferedImage img = new BufferedImage(4, 3, BufferedImage.TYPE_INT_RGB);
-
-    // int width = img.getWidth();
-    // int height = img.getHeight();
-
-    // }
+    }
 }
