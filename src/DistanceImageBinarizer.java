@@ -66,9 +66,7 @@ public class DistanceImageBinarizer implements ImageBinarizer {
                 }
             }
         }
-
         return binarizedImage;
-    
     }
 
     /**
@@ -87,6 +85,8 @@ public class DistanceImageBinarizer implements ImageBinarizer {
         for (int[] row : image) {
             if (row == null) {
                 throw new NullPointerException("Row in binarizer image is null");
+            }else if(row.length != height){
+                throw new IllegalArgumentException("Missing Data");
             }
         }
 
