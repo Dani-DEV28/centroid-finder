@@ -52,7 +52,7 @@ public class DistanceImageBinarizer implements ImageBinarizer {
         int width = image.getWidth();
         int height = image.getHeight();
 
-        int[][] binarizedImage = new int[width][height];
+        int[][] binarizedImage = new int[height][width];
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
@@ -60,9 +60,9 @@ public class DistanceImageBinarizer implements ImageBinarizer {
                 double distance = distanceFinder.distance(rgb, targetColor);
 
                 if(distance < threshold){
-                    binarizedImage[x][y] = 1;
+                    binarizedImage[y][x] = 1;
                 }else{
-                    binarizedImage[x][y] = 0;
+                    binarizedImage[y][x] = 0;
                 }
             }
         }
@@ -79,32 +79,33 @@ public class DistanceImageBinarizer implements ImageBinarizer {
      */
     @Override
     public BufferedImage toBufferedImage(int[][] image) {
-        int width = image.length;
-        int height = image[0].length;
+        int height = image.length;
+        int width = image[0].length;
 
         for (int[] row : image) {
             if (row == null) {
-                throw new NullPointerException("Row in binarizer image is null");
-            }else if(row.length != height){
-                throw new IllegalArgumentException("Missing Data");
+                throw new NullPointerException("Row in image is null");
+            } else if (row.length != width) {
+                throw new IllegalArgumentException("Inconsistent row length (missing data)");
             }
         }
 
         BufferedImage craftedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
-        for (int x = 0; x < width; x++) {
-            for (int y = 0; y < height; y++) {
-                if(image[x][y] == 1){
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                int value = image[y][x];
+                if (value == 1) {
                     craftedImage.setRGB(x, y, WHITE);
-                }else if(image[x][y] == 0){
+                } else if (value == 0) {
                     craftedImage.setRGB(x, y, BLACK);
-                }else{
-                    throw new IllegalArgumentException("Not a binarizer image");
+                } else {
+                    throw new IllegalArgumentException("Not a binary image (values must be 0 or 1)");
                 }
             }
         }
 
         return craftedImage;
-    
     }
+
 }

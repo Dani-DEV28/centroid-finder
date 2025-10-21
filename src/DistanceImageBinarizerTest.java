@@ -3,8 +3,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
-
-import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 
 public class DistanceImageBinarizerTest {
@@ -43,14 +41,14 @@ public class DistanceImageBinarizerTest {
 
         BufferedImage result = dIB.toBufferedImage(image);
 
-        assertEquals(3, result.getHeight());
-        assertEquals(2, result.getWidth());
+        assertEquals(2, result.getHeight());
+        assertEquals(3, result.getWidth());
         assertEquals(WHITE, result.getRGB(0, 0) & 0xFFFFFF);
+        assertEquals(WHITE, result.getRGB(1,0) & 0xFFFFFF);
+        assertEquals(WHITE, result.getRGB(2,0) & 0xFFFFFF);
         assertEquals(WHITE, result.getRGB(0, 1) & 0xFFFFFF);
-        assertEquals(WHITE, result.getRGB(0, 2) & 0xFFFFFF);
-        assertEquals(WHITE, result.getRGB(1, 0) & 0xFFFFFF);
         assertEquals(WHITE, result.getRGB(1, 1) & 0xFFFFFF);
-        assertEquals(WHITE, result.getRGB(1, 2) & 0xFFFFFF);
+        assertEquals(WHITE, result.getRGB(2, 1) & 0xFFFFFF);
 
     }
 
@@ -65,14 +63,14 @@ public class DistanceImageBinarizerTest {
 
         BufferedImage result = dIB.toBufferedImage(image);
 
-        assertEquals(3, result.getHeight());
-        assertEquals(2, result.getWidth());
+        assertEquals(2, result.getHeight());
+        assertEquals(3, result.getWidth());
         assertEquals(BLACK, result.getRGB(0, 0) & 0xFFFFFF);
-        assertEquals(BLACK, result.getRGB(0, 1) & 0xFFFFFF);
-        assertEquals(BLACK, result.getRGB(0, 2) & 0xFFFFFF);
         assertEquals(BLACK, result.getRGB(1, 0) & 0xFFFFFF);
+        assertEquals(BLACK, result.getRGB(2, 0) & 0xFFFFFF);
+        assertEquals(BLACK, result.getRGB(0, 1) & 0xFFFFFF);
         assertEquals(BLACK, result.getRGB(1, 1) & 0xFFFFFF);
-        assertEquals(BLACK, result.getRGB(1, 2) & 0xFFFFFF);
+        assertEquals(BLACK, result.getRGB(2, 1) & 0xFFFFFF);
 
     }
 
@@ -87,14 +85,14 @@ public class DistanceImageBinarizerTest {
 
         BufferedImage result = dIB.toBufferedImage(image);
 
-        assertEquals(3, result.getHeight());
-        assertEquals(2, result.getWidth());
+        assertEquals(2, result.getHeight());
+        assertEquals(3, result.getWidth());
         assertEquals(BLACK, result.getRGB(0, 0) & 0xFFFFFF);
-        assertEquals(WHITE, result.getRGB(0, 1) & 0xFFFFFF);
-        assertEquals(WHITE, result.getRGB(0, 2) & 0xFFFFFF);
-        assertEquals(BLACK, result.getRGB(1, 0) & 0xFFFFFF);
+        assertEquals(WHITE, result.getRGB(1, 0) & 0xFFFFFF);
+        assertEquals(WHITE, result.getRGB(2, 0) & 0xFFFFFF);
+        assertEquals(BLACK, result.getRGB(0, 1) & 0xFFFFFF);
         assertEquals(WHITE, result.getRGB(1, 1) & 0xFFFFFF);
-        assertEquals(BLACK, result.getRGB(1, 2) & 0xFFFFFF);
+        assertEquals(BLACK, result.getRGB(2, 1) & 0xFFFFFF);
 
     }
 
