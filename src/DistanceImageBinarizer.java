@@ -13,8 +13,8 @@ import java.awt.image.BufferedImage;
  */
 public class DistanceImageBinarizer implements ImageBinarizer {
 
-    public static final int BLACK = 0xFFFFFF;
-    public static final int WHITE = 0x000000;
+    private static final int WHITE = 0xFFFFFF;
+    private static final int BLACK = 0x000000;
 
     private final ColorDistanceFinder distanceFinder;
     private final int threshold;
