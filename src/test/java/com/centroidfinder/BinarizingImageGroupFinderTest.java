@@ -1,5 +1,6 @@
-import static org.junit.Assert.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+
+
+import static org.junit.jupiter.api.Assertions.*;
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
 import java.util.List;
@@ -27,47 +28,6 @@ public class BinarizingImageGroupFinderTest {
         }
     }
 
-    @Test
-    void findConnectedGroups_DelegatesToDependencies() {
-        MockBinarizer mockBinarizer = new MockBinarizer();
-        MockGroupFinder mockGroupFinder = new MockGroupFinder();
-
-        BinarizingImageGroupFinder finder =
-                new BinarizingImageGroupFinder(mockBinarizer, mockGroupFinder);
-
-        BufferedImage img = new BufferedImage(2, 2, BufferedImage.TYPE_INT_RGB);
-        List<Group> result = finder.findConnectedGroups(img);
-
-        // Check that Binarizer was called
-        assertEquals(true, mockBinarizer.toBinaryArrayCalled,
-                "Expected binarizer to be called");
-
-        // Check that the same image was passed
-        assertEquals(true, mockBinarizer.receivedImage == img,
-                "Expected binarizer to receive the same image");
-
-        // Check that GroupFinder was called
-        assertEquals(true, mockGroupFinder.findConnectedGroupsCalled,
-                "Expected group finder to be called");
-
-        // Check that GroupFinder received the array from Binarizer
-        assertEquals(true,
-                Arrays.equals(mockBinarizer.returnValue, mockGroupFinder.receivedArray),
-                "Expected group finder to receive the binary array from binarizer");
-
-        // Check that the result matches the mock output
-        assertEquals(mockGroupFinder.returnValue, result,
-                "Expected returned groups to match the mock output");
-    }
-
-    @Test
-    void constructorRejectsNullArguments() {
-        assertThrows(NullPointerException.class,
-                () -> new BinarizingImageGroupFinder(null, new MockGroupFinder()));
-        assertThrows(NullPointerException.class,
-                () -> new BinarizingImageGroupFinder(new MockBinarizer(), null));
-    }
-
     static class MockGroupFinder implements BinaryGroupFinder {
         boolean findConnectedGroupsCalled = false;
         int[][] receivedArray;
@@ -82,7 +42,34 @@ public class BinarizingImageGroupFinderTest {
     }
 
     @Test
-    public void testBinarizingImageGroupFinderTestNullImageBinarizer() {
+    void findConnectedGroups_DelegatesToDependencies() {
+        MockBinarizer mockBinarizer = new MockBinarizer();
+        MockGroupFinder mockGroupFinder = new MockGroupFinder();
+
+        BinarizingImageGroupFinder finder =
+                new BinarizingImageGroupFinder(mockBinarizer, mockGroupFinder);
+
+        BufferedImage img = new BufferedImage(2, 2, BufferedImage.TYPE_INT_RGB);
+        List<Group> result = finder.findConnectedGroups(img);
+
+        assertTrue(mockBinarizer.toBinaryArrayCalled, "Expected binarizer to be called");
+        assertSame(mockBinarizer.receivedImage, img, "Expected binarizer to receive the same image");
+        assertTrue(mockGroupFinder.findConnectedGroupsCalled, "Expected group finder to be called");
+        assertTrue(Arrays.equals(mockBinarizer.returnValue, mockGroupFinder.receivedArray),
+                "Expected group finder to receive the binary array from binarizer");
+        assertEquals(mockGroupFinder.returnValue, result, "Expected returned groups to match the mock output");
+    }
+
+    @Test
+    void constructorRejectsNullArguments() {
+        assertThrows(NullPointerException.class,
+                () -> new BinarizingImageGroupFinder(null, new MockGroupFinder()));
+        assertThrows(NullPointerException.class,
+                () -> new BinarizingImageGroupFinder(new MockBinarizer(), null));
+    }
+
+    @Test
+    void testBinarizingImageGroupFinderTestNullImageBinarizer() {
         ImageBinarizer binarizer = null;
         BinaryGroupFinder groupFinder = new DfsBinaryGroupFinder();
 
@@ -92,7 +79,7 @@ public class BinarizingImageGroupFinderTest {
     }
 
     @Test
-    public void testBinarizingImageGroupFinderTestNullGroupFinder() {
+    void testBinarizingImageGroupFinderTestNullGroupFinder() {
         ImageBinarizer binarizer = new DistanceImageBinarizer(null, 0, 0);
         BinaryGroupFinder groupFinder = null;
 
