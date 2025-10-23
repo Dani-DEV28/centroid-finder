@@ -48,7 +48,6 @@ public class DistanceImageBinarizerTest {
         assertEquals(BLACK, result.getRGB(0, 1) & 0xFFFFFF);
         assertEquals(BLACK, result.getRGB(1, 1) & 0xFFFFFF);
         assertEquals(BLACK, result.getRGB(2, 1) & 0xFFFFFF);
-
     }
 
     @Test
