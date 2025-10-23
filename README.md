@@ -64,3 +64,7 @@ Once you have confirmed it is working, clean up your code, make sure it's commit
 ## Optional Wave 7: Enhancements?
 If you want to, you can make a new branch to start experimenting. See if you can come up with a better color distance method (hint: look up perceptual color spaces). See if you can make your code more efficient or mor suited to spotting salamanders! Experiment with other test files. PLEASE MAKE SURE THIS IS IN A SEPARATE BRANCH FROM YOUR SUBMISSION.
 
+## Wave 8: Video Part 1
+
+# Overall Goal:
+The overall goal of this project will be to make your centroid finder project be able to process mp4 videos. When working properly, it will generate a CSV that tracks the largest centroid over time. The first column will be the number of seconds since the beginning of the video, and the second and third columns will be the x and y coordinates of the largest found centroid at that time. If no centroid is found at that timestamp, coordinates of (-1, -1) should be used. In this first part, we will be restructuring your centroid finder to work with Maven and choose a video processing library. We will handle the actual video processing in a later assignment.
