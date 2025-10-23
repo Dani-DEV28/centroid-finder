@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Stack;
 
 public class DfsBinaryGroupFinder implements BinaryGroupFinder {
     /**
@@ -93,21 +94,29 @@ public class DfsBinaryGroupFinder implements BinaryGroupFinder {
         return tracker;
     }
     
-    private static int dfs(int[][] grid, Coordinate curr, int[][] move, List<Coordinate> pixels) {
-        if (curr.x() < 0 || curr.x() >= grid.length || 
-            curr.y() < 0 || curr.y() >= grid[0].length || 
-            grid[curr.x()][curr.y()] == 0) {
-            return 0;
+    private static int dfs(int[][] grid, Coordinate start, int[][] move, List<Coordinate> pixels) {
+        int count = 0;
+        Stack<Coordinate> stack = new Stack<>();
+        stack.push(start);
+
+        while (!stack.isEmpty()) {
+            Coordinate curr = stack.pop();
+
+            if (curr.x() < 0 || curr.x() >= grid.length ||
+                curr.y() < 0 || curr.y() >= grid[0].length ||
+                grid[curr.x()][curr.y()] == 0) {
+                continue;
+            }
+
+            grid[curr.x()][curr.y()] = 0;
+            pixels.add(curr);
+            count++;
+
+            for (int[] dir : move) {
+                stack.push(new Coordinate(curr.x() + dir[0], curr.y() + dir[1]));
+            }
         }
 
-        grid[curr.x()][curr.y()] = 0;
-        pixels.add(curr);
-        int localCount = 1;
-
-        for (int[] dir : move) {
-            localCount += dfs(grid, new Coordinate(curr.x() + dir[0], curr.y() + dir[1]), move, pixels);
-        }
-
-        return localCount;
+        return count;
     }
 }
