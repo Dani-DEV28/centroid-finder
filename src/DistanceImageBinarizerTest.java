@@ -64,8 +64,8 @@ public class DistanceImageBinarizerTest {
         assertEquals(2, result.getHeight());
         assertEquals(3, result.getWidth());
         assertEquals(WHITE, result.getRGB(0, 0) & 0xFFFFFF);
-        assertEquals(WHITE, result.getRGB(1,0) & 0xFFFFFF);
-        assertEquals(WHITE, result.getRGB(2,0) & 0xFFFFFF);
+        assertEquals(WHITE, result.getRGB(1, 0) & 0xFFFFFF);
+        assertEquals(WHITE, result.getRGB(2, 0) & 0xFFFFFF);
         assertEquals(WHITE, result.getRGB(0, 1) & 0xFFFFFF);
         assertEquals(WHITE, result.getRGB(1, 1) & 0xFFFFFF);
         assertEquals(WHITE, result.getRGB(2, 1) & 0xFFFFFF);
@@ -265,16 +265,4 @@ public class DistanceImageBinarizerTest {
         assertEquals(1, binarizedImage[1][1]);
         assertEquals(0, binarizedImage[1][2]);
     }
-
-    // BufferedImage img = new BufferedImage(image.length, image[0].length,
-    // BufferedImage.TYPE_INT_RGB);
-
-    // DistanceImageBinarizer dIB = new DistanceImageBinarizer(new
-    // EuclideanColorDistance(), 0, 0);
-
-    // assertThrows(IllegalArgumentException.class, () -> {
-    // dIB.toBufferedImage(image);
-    // });
-    // }
-
 }
