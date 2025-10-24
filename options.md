@@ -1,4 +1,17 @@
-# Video4j vs JCodec
+# JavaCV vs Video4j vs JCodec
+
+## JavaCV
+
+### ✅ Pros
+-Is able to read MP4 files
+-Can etract and save frames
+-Is available on windows
+
+### ❌ Cons
+-Somewhat difficult to setup (Adding FFmpeg to system PATH)
+-Can be verbose to complete a simple task
+
+
 
 ## Video4j
 
