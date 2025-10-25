@@ -1,7 +1,7 @@
 package com.centroidfinder;
 
 import org.bytedeco.javacv.*;
-import org.bytedeco.opencv.opencv_core.Mat;
+// import org.bytedeco.opencv.opencv_core.Mat;
 
 public class JavaCVTest {
     public static void main(String[] args) {
