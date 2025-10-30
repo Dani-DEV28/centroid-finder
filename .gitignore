@@ -30,3 +30,4 @@ target/
 *.iml
 
 sampleOutput/frames/
+sampleOutput/processedFrames/

@@ -7,20 +7,21 @@ import org.bytedeco.javacv.Java2DFrameConverter;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.Arrays; //for testing
 
 public class VideoProcessor {
     public static void main(String[] args) {
         String videoPath = "sampleInput/testVideo.mp4"; // path to your input video
         String outputDir = "sampleOutput/frames/"; // directory to save extracted frames
 
-        String hexTargetColor = args[1];
-        int threshold = 0; //related to try catch line 41-46
-        try {
-            threshold = Integer.parseInt(args[2]);
-        } catch (NumberFormatException e) {
-            System.err.println("Threshold must be an integer.");
-            return;
-        }
+        String hexTargetColor = "FFA200";
+        int threshold = 164; //related to try catch line 41-46
+        // try {
+        //     threshold = Integer.parseInt(args[2]);
+        // } catch (NumberFormatException e) {
+        //     System.err.println("Threshold must be an integer.");
+        //     return;
+        // }
 
         FFmpegFrameGrabber grabber = new FFmpegFrameGrabber(videoPath);
         Java2DFrameConverter converter = new Java2DFrameConverter();
@@ -41,6 +42,7 @@ public class VideoProcessor {
 
                     // ✅ Call ImageSummaryApp on this saved frame
                     String[] imageArgs = { fileName, hexTargetColor, String.valueOf(threshold) };
+                    System.out.println("About to pass imageArgs: " + Arrays.toString(imageArgs));
                     ImageSummaryApp.main(imageArgs);
                 }
                 frameNumber++;

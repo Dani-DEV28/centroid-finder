@@ -1,3 +1,5 @@
+package com.centroidfinder;
+
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.PrintWriter;
@@ -30,6 +32,7 @@ import javax.imageio.ImageIO;
  */
 public class ImageSummaryApp {
     public static void main(String[] args) {
+        System.out.println("ISA boot");
         if (args.length < 3) {
             System.out.println("Usage: java ImageSummaryApp <input_image> <hex_target_color> <threshold>");
             return;
@@ -70,10 +73,14 @@ public class ImageSummaryApp {
         // Binarize the input image.
         int[][] binaryArray = binarizer.toBinaryArray(inputImage);
         BufferedImage binaryImage = binarizer.toBufferedImage(binaryArray);
-        
+
+        String outputDir = "sampleOutput/processedFrames/";
+
+        File file = new File(inputImagePath);
+        String filePath = String.format("%sbinarized_%s", outputDir, file.getName());
         // Write the binarized image to disk as "binarized.png".
         try {
-            ImageIO.write(binaryImage, "png", new File("binarized.png"));
+            ImageIO.write(binaryImage, "png", new File(filePath));
             System.out.println("Binarized image saved as binarized.png");
         } catch (Exception e) {
             System.err.println("Error saving binarized image.");
