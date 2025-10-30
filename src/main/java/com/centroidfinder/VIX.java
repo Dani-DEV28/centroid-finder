@@ -10,8 +10,8 @@ import java.io.File;
 
 public class VIX {
     public static void main(String[] args) {
-        String videoPath = "/sampleInput/testVideo.mp4"; // path to your input video
-        String outputDir = "frames/"; // directory to save extracted frames
+        String videoPath = "sampleInput/testVideo.mp4"; // path to your input video
+        String outputDir = "sampleOutput/frames/"; // directory to save extracted frames
 
         FFmpegFrameGrabber grabber = new FFmpegFrameGrabber(videoPath);
         Java2DFrameConverter converter = new Java2DFrameConverter();

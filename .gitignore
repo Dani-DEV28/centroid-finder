@@ -28,3 +28,5 @@ target/
 .idea/
 .vscode/
 *.iml
+
+sampleOutput/frames/
