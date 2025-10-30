@@ -107,7 +107,9 @@ public class ImageSummaryApp {
         String outputDirCSV = "sampleOutput/CSV/";
         new File(outputDirCSV).mkdirs();
 
-        String filePathCSV = String.format("%sgroups_%s.csv", outputDirCSV, file.getName());
+        int dotIndex = file.getName().lastIndexOf('.');
+        String noExt = file.getName().substring(0, dotIndex);
+        String filePathCSV = String.format("%sgroups_%s.csv", outputDirCSV, noExt);
 
         // frameNumber / frameRate gives seconds
 
