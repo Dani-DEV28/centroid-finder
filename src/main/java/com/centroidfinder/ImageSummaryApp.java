@@ -108,6 +108,9 @@ public class ImageSummaryApp {
         new File(outputDirCSV).mkdirs();
 
         String filePathCSV = String.format("%sgroups_%s.csv", outputDirCSV, file.getName());
+
+        // frameNumber / frameRate gives seconds
+
         // Write the groups information to a CSV file "groups.csv".
         try (PrintWriter writer = new PrintWriter(filePathCSV)) {
             for (Group group : groups) {
