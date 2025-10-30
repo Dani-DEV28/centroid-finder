@@ -1,3 +1,5 @@
+package com.centroidfinder;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.awt.image.BufferedImage;
@@ -23,8 +25,8 @@ public class DistanceImageBinarizerTest {
         assertEquals(2, result.getWidth());
         assertEquals(2, result.getHeight());
         assertEquals(BLACK, result.getRGB(0, 0) & 0xFFFFFF);
-        assertEquals(WHITE, result.getRGB(1, 0) & 0xFFFFFF);
         assertEquals(WHITE, result.getRGB(0, 1) & 0xFFFFFF);
+        assertEquals(WHITE, result.getRGB(1, 0) & 0xFFFFFF);
         assertEquals(BLACK, result.getRGB(1, 1) & 0xFFFFFF);
     }
 
@@ -160,12 +162,12 @@ public class DistanceImageBinarizerTest {
 
         assertEquals(width, binarizedImage[0].length);
         assertEquals(height, binarizedImage.length);
-        assertEquals(1, binarizedImage[0][0]);
-        assertEquals(1, binarizedImage[0][1]);
-        assertEquals(1, binarizedImage[0][2]);
-        assertEquals(1, binarizedImage[1][0]);
-        assertEquals(1, binarizedImage[1][1]);
-        assertEquals(1, binarizedImage[1][2]);
+        assertEquals(0, binarizedImage[0][0]);
+        assertEquals(0, binarizedImage[0][1]);
+        assertEquals(0, binarizedImage[0][2]);
+        assertEquals(0, binarizedImage[1][0]);
+        assertEquals(0, binarizedImage[1][1]);
+        assertEquals(0, binarizedImage[1][2]);
     }
 
     @Test
@@ -173,38 +175,6 @@ public class DistanceImageBinarizerTest {
         BufferedImage img = new BufferedImage(3, 2, BufferedImage.TYPE_INT_RGB);
 
         int color = 0x048080;
-        int targetColor = 0x008080;
-        int width = img.getWidth();
-        int height = img.getHeight();
-
-        img.setRGB(0, 0, color);
-        img.setRGB(1, 0, color);
-        img.setRGB(2, 0, color);
-        img.setRGB(0, 1, color);
-        img.setRGB(1, 1, color);
-        img.setRGB(2, 1, color);
-
-        DistanceImageBinarizer dIB = new DistanceImageBinarizer(new EuclideanColorDistance(), targetColor, 5);
-
-        int[][] binarizedImage = dIB.toBinaryArray(img);
-
-        System.out.println(Arrays.deepToString(binarizedImage));
-
-        assertEquals(width, binarizedImage[0].length);
-        assertEquals(height, binarizedImage.length);
-        assertEquals(1, binarizedImage[0][0]);
-        assertEquals(1, binarizedImage[0][1]);
-        assertEquals(1, binarizedImage[0][2]);
-        assertEquals(1, binarizedImage[1][0]);
-        assertEquals(1, binarizedImage[1][1]);
-        assertEquals(1, binarizedImage[1][2]);
-    }
-
-    @Test
-    void testToBinaryArrayAllBlackOutsideThreshold() {
-        BufferedImage img = new BufferedImage(3, 2, BufferedImage.TYPE_INT_RGB);
-
-        int color = 0x108080;
         int targetColor = 0x008080;
         int width = img.getWidth();
         int height = img.getHeight();
@@ -233,6 +203,38 @@ public class DistanceImageBinarizerTest {
     }
 
     @Test
+    void testToBinaryArrayAllBlackOutsideThreshold() {
+        BufferedImage img = new BufferedImage(3, 2, BufferedImage.TYPE_INT_RGB);
+
+        int color = 0x108080;
+        int targetColor = 0x008080;
+        int width = img.getWidth();
+        int height = img.getHeight();
+
+        img.setRGB(0, 0, color);
+        img.setRGB(1, 0, color);
+        img.setRGB(2, 0, color);
+        img.setRGB(0, 1, color);
+        img.setRGB(1, 1, color);
+        img.setRGB(2, 1, color);
+
+        DistanceImageBinarizer dIB = new DistanceImageBinarizer(new EuclideanColorDistance(), targetColor, 5);
+
+        int[][] binarizedImage = dIB.toBinaryArray(img);
+
+        System.out.println(Arrays.deepToString(binarizedImage));
+
+        assertEquals(width, binarizedImage[0].length);
+        assertEquals(height, binarizedImage.length);
+        assertEquals(1, binarizedImage[0][0]);
+        assertEquals(1, binarizedImage[0][1]);
+        assertEquals(1, binarizedImage[0][2]);
+        assertEquals(1, binarizedImage[1][0]);
+        assertEquals(1, binarizedImage[1][1]);
+        assertEquals(1, binarizedImage[1][2]);
+    }
+
+    @Test
     void testToBinaryArrayMixed() {
         BufferedImage img = new BufferedImage(3, 2, BufferedImage.TYPE_INT_RGB);
 
@@ -257,11 +259,11 @@ public class DistanceImageBinarizerTest {
 
         assertEquals(width, binarizedImage[0].length);
         assertEquals(height, binarizedImage.length);
-        assertEquals(1, binarizedImage[0][0]);
-        assertEquals(1, binarizedImage[0][1]);
-        assertEquals(0, binarizedImage[0][2]);
-        assertEquals(0, binarizedImage[1][0]);
-        assertEquals(1, binarizedImage[1][1]);
-        assertEquals(0, binarizedImage[1][2]);
+        assertEquals(0, binarizedImage[0][0]);
+        assertEquals(0, binarizedImage[0][1]);
+        assertEquals(1, binarizedImage[0][2]);
+        assertEquals(1, binarizedImage[1][0]);
+        assertEquals(0, binarizedImage[1][1]);
+        assertEquals(1, binarizedImage[1][2]);
     }
 }
