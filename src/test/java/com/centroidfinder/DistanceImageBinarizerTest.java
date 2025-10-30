@@ -1,3 +1,5 @@
+package com.centroidfinder;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.awt.image.BufferedImage;

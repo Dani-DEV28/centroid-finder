@@ -1,3 +1,5 @@
+package com.centroidfinder;
+
 import static org.junit.jupiter.api.Assertions.*;
 import java.awt.image.BufferedImage;
 import java.util.Arrays;
@@ -10,7 +12,7 @@ public class BinarizingImageGroupFinderTest {
     static class MockBinarizer implements ImageBinarizer {
         boolean toBinaryArrayCalled = false;
         BufferedImage receivedImage;
-        int[][] returnValue = { {1, 0}, {0, 1} };
+        int[][] returnValue = { { 1, 0 }, { 0, 1 } };
 
         @Override
         public int[][] toBinaryArray(BufferedImage image) {
@@ -44,8 +46,7 @@ public class BinarizingImageGroupFinderTest {
         MockBinarizer mockBinarizer = new MockBinarizer();
         MockGroupFinder mockGroupFinder = new MockGroupFinder();
 
-        BinarizingImageGroupFinder finder =
-                new BinarizingImageGroupFinder(mockBinarizer, mockGroupFinder);
+        BinarizingImageGroupFinder finder = new BinarizingImageGroupFinder(mockBinarizer, mockGroupFinder);
 
         BufferedImage img = new BufferedImage(2, 2, BufferedImage.TYPE_INT_RGB);
         List<Group> result = finder.findConnectedGroups(img);

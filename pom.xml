@@ -6,6 +6,7 @@
   <groupId>com.centroidfinder</groupId>
   <artifactId>centroid-finder</artifactId>
   <version>1.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
   <name>Centroid Finder</name>
 
   <!-- Minimum Maven version required -->
@@ -58,7 +59,7 @@
           </includes>
         </configuration>
       </plugin>
-<!-- 
+      <!-- 
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>exec-maven-plugin</artifactId>

@@ -1,3 +1,5 @@
+package com.centroidfinder;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -45,16 +47,15 @@ public class EuclideanColorDistanceTest {
         int colorB = 0x654321; // R=101, G=67, B=33
 
         double expected = Math.sqrt(
-            Math.pow(18 - 101, 2) +
-            Math.pow(52 - 67, 2) +
-            Math.pow(86 - 33, 2)
-        );
+                Math.pow(18 - 101, 2) +
+                        Math.pow(52 - 67, 2) +
+                        Math.pow(86 - 33, 2));
 
         assertEquals(expected, colorDistance.distance(colorA, colorB), 0.0001, "Mixed color distance mismatch");
     }
 
     @Test
-    void exceedBitHexValueNegative(){
+    void exceedBitHexValueNegative() {
         int exceed = 0xFF000000;
 
         assertThrows(IllegalArgumentException.class, () -> {
@@ -63,7 +64,7 @@ public class EuclideanColorDistanceTest {
     }
 
     @Test
-    void exceedBitHexValuePositive(){
+    void exceedBitHexValuePositive() {
         int exceed = 0x7FFFFFFF;
 
         assertThrows(IllegalArgumentException.class, () -> {
