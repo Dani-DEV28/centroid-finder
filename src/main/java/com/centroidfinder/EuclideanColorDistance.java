@@ -26,22 +26,36 @@ public class EuclideanColorDistance implements ColorDistanceFinder {
             throw new IllegalArgumentException("Value exceeds 24-bit RGB range");
         }
 
-        int b1 = convert(colorA, 0x0000FF, 0);
-        int b2 = convert(colorB, 0x0000FF, 0);
+        // int b1 = convert(colorA, 0x0000FF, 0);
+        // int b2 = convert(colorB, 0x0000FF, 0);
 
-        int g1 = convert(colorA, 0x00FF00, 8);
-        int g2 = convert(colorB, 0x00FF00, 8);
+        // int g1 = convert(colorA, 0x00FF00, 8);
+        // int g2 = convert(colorB, 0x00FF00, 8);
 
-        int r1 = convert(colorA, 0xFF0000, 16);
-        int r2 = convert(colorB, 0xFF0000, 16);
+        // int r1 = convert(colorA, 0xFF0000, 16);
+        // int r2 = convert(colorB, 0xFF0000, 16);
 
-        double dist = Math.sqrt(Math.pow(r1 - r2, 2) + Math.pow(g1 - g2, 2) + Math.pow(b1 - b2, 2));
+        // double dist = Math.sqrt(Math.pow(r1 - r2, 2) + Math.pow(g1 - g2, 2) + Math.pow(b1 - b2, 2));
 
-        return dist;
+        // return dist;
+
+        int r1 = (colorA >> 16) & 0xFF;
+        int g1 = (colorA >> 8) & 0xFF;
+        int b1 = colorA & 0xFF;
+
+        int r2 = (colorB >> 16) & 0xFF;
+        int g2 = (colorB >> 8) & 0xFF;
+        int b2 = colorB & 0xFF;
+
+        return Math.sqrt(
+            (r1 - r2) * (r1 - r2) +
+            (g1 - g2) * (g1 - g2) +
+            (b1 - b2) * (b1 - b2)
+        );
     }
 
-    private static int convert(int color, int mask, int shift) {
-        int preShift = color & mask;
-        return preShift >> shift;
-    }
+    // private static int convert(int color, int mask, int shift) {
+    //     int preShift = color & mask;
+    //     return preShift >> shift;
+    // }
 }
