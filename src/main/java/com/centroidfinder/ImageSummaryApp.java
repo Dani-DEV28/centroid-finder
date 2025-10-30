@@ -39,20 +39,20 @@ import javax.imageio.ImageIO;
 public class ImageSummaryApp {
     public static void main(String[] args) {
         System.out.println("ISA boot");
-        if (args.length < 3) {
-            System.out.println("Usage: java ImageSummaryApp <input_image> <hex_target_color> <threshold>");
-            return;
-        } // can be ignore, but just checking is parameter are present
+        // if (args.length < 3) {
+        //     System.out.println("Usage: java ImageSummaryApp <input_image> <hex_target_color> <threshold>");
+        //     return;
+        // } // can be ignore, but just checking is parameter are present
 
-        String inputImagePath = args[0];
-        String hexTargetColor = args[1];
-        int threshold = 0; // related to try catch line 41-46
-        try {
-            threshold = Integer.parseInt(args[2]);
-        } catch (NumberFormatException e) {
-            System.err.println("Threshold must be an integer.");
-            return;
-        }
+        // String inputImagePath = args[0];
+        // String hexTargetColor = args[1];
+        // int threshold = 0; // related to try catch line 41-46
+        // try {
+        //     threshold = Integer.parseInt(args[2]);
+        // } catch (NumberFormatException e) {
+        //     System.err.println("Threshold must be an integer.");
+        //     return;
+        // }
 
         BufferedImage inputImage = null;
         try {

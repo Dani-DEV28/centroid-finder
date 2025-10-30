@@ -1,16 +1,22 @@
 package com.centroidfinder;
 
-import org.bytedeco.javacv.FFmpegFrameGrabber;
-import org.bytedeco.javacv.Frame;
-import org.bytedeco.javacv.Java2DFrameConverter;
-
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.util.Arrays; //for testing
-
 public class VideoProcessor {
     public static void main(String[] args) {
+        if (args.length < 3) {
+            System.out.println("Usage: java VideoProcessor <videoPath> <hex_target_color> <threshold>");
+            return;
+        } // can be ignore, but just checking is parameter are present
+
+        // String videoPath = args[0];
+        // String hexTargetColor = args[1];
+        // int threshold = 0;
+        // try {
+        //     threshold = Integer.parseInt(args[2]);
+        // } catch (NumberFormatException e) {
+        //     System.err.println("Threshold must be an integer.");
+        //     return;
+        // }
+
         String videoPath = "sampleInput/ensantina.mp4"; // path to your input video
         String outputDir = "sampleOutput/frames/"; // directory to save extracted frames
 
@@ -23,47 +29,19 @@ public class VideoProcessor {
         //     return;
         // }
 
-        FFmpegFrameGrabber grabber = new FFmpegFrameGrabber(videoPath);
-        Java2DFrameConverter converter = new Java2DFrameConverter();
+        // FFmpegFrameGrabber grabber = new FFmpegFrameGrabber(videoPath);
+        // Java2DFrameConverter converter = new Java2DFrameConverter();
 
-        try {
-            grabber.start(); // open the video file
-            int frameNumber = 0;
+        frameExt.main(videoPath, outputDir, hexTargetColor, threshold);
 
-            // Make sure the output folder exists
-            new File(outputDir).mkdirs();
+        String csvDirectory = "./sampleOutput/CSV/";
+        String outputCsv = "sampleOutput/masterGroup.csv";
 
-            Frame frame;
+        extractCSV extractor = new extractCSV(outputCsv);
+        extractor.extractFromDirectory(csvDirectory);
 
-            int frameRate = (int) Math.round(grabber.getFrameRate());
+        System.out.println("CSV extraction complete!");
 
-            while ((frame = grabber.grabImage()) != null) {
-                if (frameNumber % frameRate == 0) { // roughly 1 frame per second (if 30 FPS)
-                    BufferedImage image = converter.convert(frame);
-                    String fileName = String.format("%sframe_%05d.png", outputDir, frameNumber);
-                    ImageIO.write(image, "png", new File(fileName));
-
-                    // ✅ Call ImageSummaryApp on this saved frame
-                    String[] imageArgs = { fileName, hexTargetColor, String.valueOf(threshold) };
-                    System.out.println("About to pass imageArgs: " + Arrays.toString(imageArgs));
-                    ImageSummaryApp.main(imageArgs);
-                }
-                frameNumber++;
-            }
-
-            grabber.stop();
-
-            String csvDirectory = "./sampleOutput/CSV/";
-            String outputCsv = "sampleOutput/masterGroup.csv";
-
-            extractCSV extractor = new extractCSV(outputCsv);
-            extractor.extractFromDirectory(csvDirectory);
-
-            System.out.println("CSV extraction complete!");
-
-            System.out.println("Frame extraction completed!");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        System.out.println("Frame extraction completed!");
     }
 }

@@ -18,6 +18,7 @@ public class extractCSV {
     }
 
     public void extractFromDirectory(String dirPath) {
+        // System.out.println(dirPath);
         try (PrintWriter writer = new PrintWriter(new FileWriter(outputFile.toFile(), true))) {
             Files.list(Paths.get(dirPath))
                 .filter(path -> path.toString().endsWith(".csv"))
