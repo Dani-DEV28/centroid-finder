@@ -34,3 +34,4 @@ sampleOutput/processedFrames/
 sampleOutput/CSV/
 
 *.mp4
+*.csv
