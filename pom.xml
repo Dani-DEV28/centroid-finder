@@ -75,7 +75,7 @@
         <configuration>
           <archive>
             <manifest>
-              <mainClass>your.package.VideoProcessor</mainClass>
+              <mainClass>com.centroidfinder.VideoProcessor</mainClass>
             </manifest>
           </archive>
           <descriptorRefs>
