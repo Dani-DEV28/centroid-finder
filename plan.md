@@ -17,14 +17,14 @@
   - Passes each frame to the `CentroidFinder` for analysis.
   - Manages time intervals between frames for timestamp logging.
 
-### **CentroidFinder**
+### **CentroidFinder** - Postponed
 - **Purpose:** Core logic to identify the largest centroid in a frame.
 - **Responsibilities:**
   - Processes each image frame.
   - Finds the **largest object near the center** of the image.
   - Returns `(x, y)` coordinates of the centroid or `(-1, -1)` if none is found.
 
-### **CSVWriter**
+### **CSVWriter** - Postponed
 - **Purpose:** Handles output of results.
 - **Responsibilities:**
   - Writes timestamped centroid data into a `.csv` file.
