@@ -52,6 +52,15 @@ public class VideoProcessor {
             }
 
             grabber.stop();
+
+            String csvDirectory = "./sampleOutput/CSV/";
+            String outputCsv = "sampleOutput/masterGroup.csv";
+
+            extractCSV extractor = new extractCSV(outputCsv);
+            extractor.extractFromDirectory(csvDirectory);
+
+            System.out.println("CSV extraction complete!");
+
             System.out.println("Frame extraction completed!");
         } catch (Exception e) {
             e.printStackTrace();
