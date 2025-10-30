@@ -13,6 +13,15 @@ public class VideoProcessor {
         String videoPath = "sampleInput/testVideo.mp4"; // path to your input video
         String outputDir = "sampleOutput/frames/"; // directory to save extracted frames
 
+        String hexTargetColor = args[1];
+        int threshold = 0; //related to try catch line 41-46
+        try {
+            threshold = Integer.parseInt(args[2]);
+        } catch (NumberFormatException e) {
+            System.err.println("Threshold must be an integer.");
+            return;
+        }
+
         FFmpegFrameGrabber grabber = new FFmpegFrameGrabber(videoPath);
         Java2DFrameConverter converter = new Java2DFrameConverter();
 
@@ -29,7 +38,8 @@ public class VideoProcessor {
                     BufferedImage image = converter.convert(frame);
                     String fileName = String.format("%sframe_%05d.png", outputDir, frameNumber);
                     ImageIO.write(image, "png", new File(fileName));
-                    System.out.println("Saved: " + fileName);
+                    //Call ImageSummaryApp("java ImageSummaryApp ${fileName} <hex_target_color> <threshold>")
+                    // System.out.println("Saved: " + fileName + "FPS = " + grabber.getFrameRate());
                 }
                 frameNumber++;
             }
