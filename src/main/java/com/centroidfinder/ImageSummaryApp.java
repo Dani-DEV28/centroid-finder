@@ -37,7 +37,7 @@ public class ImageSummaryApp {
         
         String inputImagePath = args[0];
         String hexTargetColor = args[1];
-        int threshold = 0;
+        int threshold = 0; //related to try catch line 41-46
         try {
             threshold = Integer.parseInt(args[2]);
         } catch (NumberFormatException e) {
