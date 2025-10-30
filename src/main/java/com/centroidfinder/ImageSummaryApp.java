@@ -75,6 +75,7 @@ public class ImageSummaryApp {
         BufferedImage binaryImage = binarizer.toBufferedImage(binaryArray);
 
         String outputDir = "sampleOutput/processedFrames/";
+        new File(outputDir).mkdirs();
 
         File file = new File(inputImagePath);
         String filePath = String.format("%sbinarized_%s", outputDir, file.getName());
@@ -105,5 +106,7 @@ public class ImageSummaryApp {
             System.err.println("Error writing groups.csv");
             e.printStackTrace();
         }
+
+        System.out.println("Program Ends");
     }
 }
