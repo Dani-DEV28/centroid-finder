@@ -38,8 +38,10 @@ public class VideoProcessor {
                     BufferedImage image = converter.convert(frame);
                     String fileName = String.format("%sframe_%05d.png", outputDir, frameNumber);
                     ImageIO.write(image, "png", new File(fileName));
-                    //Call ImageSummaryApp("java ImageSummaryApp ${fileName} <hex_target_color> <threshold>")
-                    // System.out.println("Saved: " + fileName + "FPS = " + grabber.getFrameRate());
+
+                    // ✅ Call ImageSummaryApp on this saved frame
+                    String[] imageArgs = { fileName, hexTargetColor, String.valueOf(threshold) };
+                    ImageSummaryApp.main(imageArgs);
                 }
                 frameNumber++;
             }
