@@ -14,7 +14,7 @@ public class VideoProcessorTest {
     }
 
     @Test
-    void test1() {
+    void test2() {
 
     }
 }
