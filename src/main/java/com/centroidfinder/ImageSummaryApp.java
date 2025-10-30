@@ -104,8 +104,12 @@ public class ImageSummaryApp {
         // then locate connected groups of white pixels.
         List<Group> groups = groupFinder.findConnectedGroups(inputImage);
 
+        String outputDirCSV = "sampleOutput/CSV/";
+        new File(outputDirCSV).mkdirs();
+
+        String filePathCSV = String.format("%sgroups_%s.csv", outputDirCSV, file.getName());
         // Write the groups information to a CSV file "groups.csv".
-        try (PrintWriter writer = new PrintWriter("groups.csv")) {
+        try (PrintWriter writer = new PrintWriter(filePathCSV)) {
             for (Group group : groups) {
                 writer.println(group.toCsvRow());
             }

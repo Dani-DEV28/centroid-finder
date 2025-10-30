@@ -31,4 +31,5 @@ target/
 
 sampleOutput/frames/
 sampleOutput/processedFrames/
-sampleInput/ensantina.mp4
+sampleOutput/CSV/
+
