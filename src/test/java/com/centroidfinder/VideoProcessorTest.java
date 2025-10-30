@@ -10,7 +10,6 @@ public class VideoProcessorTest {
     @Test
     void test1() {
         BufferedImage img = new BufferedImage(3, 2, BufferedImage.TYPE_INT_RGB);
-
     }
 
     @Test
