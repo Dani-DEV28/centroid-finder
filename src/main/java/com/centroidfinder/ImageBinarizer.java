@@ -1,3 +1,5 @@
+package com.centroidfinder;
+
 import java.awt.image.BufferedImage;
 
 /**

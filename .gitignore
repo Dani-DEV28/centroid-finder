@@ -30,3 +30,5 @@ target/
 *.iml
 
 sampleOutput/frames/
+sampleOutput/processedFrames/
+sampleInput/ensantina.mp4
