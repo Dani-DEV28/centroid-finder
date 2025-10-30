@@ -11,7 +11,7 @@ import java.util.Arrays; //for testing
 
 public class VideoProcessor {
     public static void main(String[] args) {
-        String videoPath = "sampleInput/testVideo.mp4"; // path to your input video
+        String videoPath = "sampleInput/ensantina.mp4"; // path to your input video
         String outputDir = "sampleOutput/frames/"; // directory to save extracted frames
 
         String hexTargetColor = "FFA200";
@@ -34,8 +34,11 @@ public class VideoProcessor {
             new File(outputDir).mkdirs();
 
             Frame frame;
+
+            int frameRate = (int) Math.round(grabber.getFrameRate());
+
             while ((frame = grabber.grabImage()) != null) {
-                if (frameNumber % grabber.getFrameRate() == 0) { // roughly 1 frame per second (if 30 FPS)
+                if (frameNumber % frameRate == 0) { // roughly 1 frame per second (if 30 FPS)
                     BufferedImage image = converter.convert(frame);
                     String fileName = String.format("%sframe_%05d.png", outputDir, frameNumber);
                     ImageIO.write(image, "png", new File(fileName));
