@@ -106,5 +106,7 @@ public class ImageSummaryApp {
             System.err.println("Error writing groups.csv");
             e.printStackTrace();
         }
+
+        System.out.println("Program Ends");
     }
 }
