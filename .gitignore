@@ -32,5 +32,6 @@ target/
 sampleOutput/frames/
 sampleOutput/processedFrames/
 sampleOutput/CSV/
+server/node_modules/
 
 *.mp4
