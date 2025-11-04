@@ -26,14 +26,8 @@ public class VideoProcessor {
         String hexTargetColor = "FFA200";
         int threshold = 164; 
 
-        // FFmpegFrameGrabber grabber = new FFmpegFrameGrabber(videoPath);
-        // Java2DFrameConverter converter = new Java2DFrameConverter();
-
         String outputDirCSV = "processor/sampleOutput/CSV/";
         new File(outputDirCSV).mkdirs();
-
-        // int dotIndex = file.getName().lastIndexOf('.');
-        // String noExt = file.getName().substring(0, dotIndex);
         
         String filePathCSV = outputDirCSV + "groups_master.csv";
 
@@ -58,15 +52,7 @@ public class VideoProcessor {
             System.err.println("Error creating groups_master.csv: " + e.getMessage());
         }
 
-        frameExt.main(videoPath, outputDir, hexTargetColor, threshold);
-
-        // String csvDirectory = "./sampleOutput/CSV/";
-        // String outputCsv = "sampleOutput/masterGroup.csv";
-
-        // extractCSV extractor = new extractCSV(outputCsv);
-        // extractor.extractFromDirectory(csvDirectory);
-
-        // System.out.println("CSV extraction complete!");
+        frameExt.processVideo(videoPath, outputDir, hexTargetColor, threshold);
 
         System.out.println("Frame extraction completed!");
     }
