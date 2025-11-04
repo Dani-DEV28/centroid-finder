@@ -21,6 +21,9 @@ try {
     });
 
     console.log(mp4Files);
+
+
+
 } catch (err) {
     console.error('Error reading folder:', err);
 }
