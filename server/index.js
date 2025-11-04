@@ -6,8 +6,8 @@ import tumbRouter from "./routes/api.js";
 
 const app = express()
 
-app.use("/api", apiRouter);
-app.use("/thumbnail", tumbRouter);
-//app.use("/process", processRouter);
+app.use("/", apiRouter);
+app.use("/", tumbRouter);
+//app.use("/", processRouter);
 
 app.listen(3000, console.log(`Server running at http://localhost:${PORT}`));

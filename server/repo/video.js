@@ -24,3 +24,5 @@ try {
 } catch (err) {
     console.error('Error reading folder:', err);
 }
+
+export default mp4Files;

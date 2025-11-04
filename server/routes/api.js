@@ -2,6 +2,6 @@ import { Router } from "express";
 
 const router = Router();
 
-router.get("/videos",);
+router.get("/api",);
 
 export default router;
