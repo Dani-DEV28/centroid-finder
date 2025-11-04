@@ -1,13 +1,12 @@
 import express from 'express';
-//import { spawn } from 'child_process';
-import apiRouter from "./routes/api.js";
-import tumbRouter from "./routes/api.js";
-//import processRouter from "./routes/api.js";
+import apiRouter from './routes/api.js';
+import thumbnailRouter from './routes/thumbnail.js'; // <-- separate file for thumbnail
 
-const app = express()
+const app = express();
+const PORT = 3000;
 
-app.use("/", apiRouter);
-app.use("/", tumbRouter);
-//app.use("/", processRouter);
+// Mount routers
+app.use('/api', apiRouter);
+app.use('/thumbnail', thumbnailRouter);
 
-app.listen(3000, console.log(`Server running at http://localhost:${PORT}`));
+app.listen(PORT, () => console.log(`Server running at http://localhost:${PORT}`));
