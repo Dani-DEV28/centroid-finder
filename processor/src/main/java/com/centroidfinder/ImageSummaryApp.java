@@ -40,12 +40,7 @@ import java.util.List;
 public class ImageSummaryApp {
     public static void main(BufferedImage image, String[] args) {
         System.out.println("ISA boot");
-        // if (args.length < 3) {
-        //     System.out.println("Usage: java ImageSummaryApp <input_image> <hex_target_color> <threshold>");
-        //     return;
-        // } // can be ignore, but just checking is parameter are present
-
-        // String inputImagePath = args[0];
+        
         String hexTargetColor = args[0];
         int threshold = 0; // related to try catch line 41-46
         try {
@@ -54,15 +49,6 @@ public class ImageSummaryApp {
             System.err.println("Threshold must be an integer.");
             return;
         }
-
-        // BufferedImage inputImage = null;
-        // try {
-        //     inputImage = ImageIO.read(new File(inputImagePath));
-        // } catch (Exception e) {
-        //     System.err.println("Error loading image: " + inputImagePath);
-        //     e.printStackTrace();
-        //     return;
-        // }
 
         // Parse the target color from a hex string (format RRGGBB) into a 24-bit
         // integer (0xRRGGBB)
@@ -78,24 +64,6 @@ public class ImageSummaryApp {
         ColorDistanceFinder distanceFinder = new EuclideanColorDistance();
         ImageBinarizer binarizer = new DistanceImageBinarizer(distanceFinder, targetColor, threshold);
 
-        // Binarize the input image.
-        // int[][] binaryArray = binarizer.toBinaryArray(image);
-        // BufferedImage binaryImage = binarizer.toBufferedImage(binaryArray); //Binarized Image
-
-        // String outputDir = "sampleOutput/processedFrames/";
-        // new File(outputDir).mkdirs();
-
-        // File file = new File(inputImagePath);
-        // String filePath = String.format("%sbinarized_%s", outputDir, file.getName());
-        // // Write the binarized image to disk as "binarized.png".
-        // try {
-        //     ImageIO.write(binaryImage, "png", new File(filePath));
-        //     System.out.println("Binarized image saved as binarized.png");
-        // } catch (Exception e) {
-        //     System.err.println("Error saving binarized image.");
-        //     e.printStackTrace();
-        // }
-
         // Create an ImageGroupFinder using a BinarizingImageGroupFinder with a
         // DFS-based BinaryGroupFinder.
         ImageGroupFinder groupFinder = new BinarizingImageGroupFinder(binarizer, new DfsBinaryGroupFinder());
@@ -107,15 +75,8 @@ public class ImageSummaryApp {
 
         String outputDirCSV = "processor/sampleOutput/CSV/";
         new File(outputDirCSV).mkdirs();
-
-        // int dotIndex = file.getName().lastIndexOf('.');
-        // String noExt = file.getName().substring(0, dotIndex);
         
         String filePathCSV = outputDirCSV + "groups_master.csv";
-
-        // frameNumber / frameRate gives seconds
-
-        // Write the groups information to a CSV file "groups.csv".
 
     try {
         // Count how many lines are already in the CSV to get next line index

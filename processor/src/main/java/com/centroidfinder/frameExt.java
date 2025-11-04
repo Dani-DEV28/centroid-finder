@@ -4,14 +4,13 @@ import org.bytedeco.javacv.FFmpegFrameGrabber;
 import org.bytedeco.javacv.Frame;
 import org.bytedeco.javacv.Java2DFrameConverter;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 public class frameExt {
-    public static void main(String videoPath, String outputDir, String hexTargetColor, int threshold){
+    public static void processVideo(String videoPath, String outputDir, String hexTargetColor, int threshold){
 
-        FFmpegFrameGrabber grabber = new FFmpegFrameGrabber(videoPath);
-        Java2DFrameConverter converter = new Java2DFrameConverter();
-
-        try{
+        try (FFmpegFrameGrabber grabber = new FFmpegFrameGrabber(videoPath);
+            Java2DFrameConverter converter = new Java2DFrameConverter()){
             grabber.start(); // open the video file
             int frameNumber = 0;
 
@@ -23,8 +22,6 @@ public class frameExt {
             while ((frame = grabber.grabImage()) != null  && frameNumber < totalFrames) {
                 if (frameNumber % frameRate == 0) { // roughly 1 frame per second (if 30 FPS)
                     BufferedImage image = converter.convert(frame);
-                    // String fileName = String.format("%sframe_%05d.png", outputDir, frameNumber);
-                    // ImageIO.write(image, "png", new File(fileName));
 
                     // ✅ Call ImageSummaryApp on this saved frame
                     String[] imageArgs = { hexTargetColor, String.valueOf(threshold) };
@@ -34,18 +31,14 @@ public class frameExt {
                 frameNumber++;
             }
 
-            grabber.stop();
+            System.out.println("✅ Frame extraction complete.");
 
-            // String csvDirectory = "./sampleOutput/CSV/";
-            // String outputCsv = "sampleOutput/masterGroup.csv";
+        }  catch (IOException e) {
+            System.err.println("I/O Error while accessing video: " + e.getMessage());
+            e.printStackTrace();
 
-            // extractCSV extractor = new extractCSV(outputCsv);
-            // extractor.extractFromDirectory(csvDirectory);
-
-            // System.out.println("CSV extraction complete!");
-
-            // System.out.println("Frame extraction completed!");
         } catch (Exception e) {
+            System.err.println("Unexpected error: " + e.getMessage());
             e.printStackTrace();
         }
     }   
