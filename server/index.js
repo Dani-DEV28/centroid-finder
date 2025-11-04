@@ -1,1 +1,11 @@
 import express from 'express';
+//import { spawn } from 'child_process';
+import apiRouter from "./routes/api.js";
+import tumbRouter from "./routes/api.js";
+//import processRouter from "./routes/api.js";
+
+const app = express()
+
+app.use("/api", apiRouter);
+app.use("/thumbnail", tumbRouter);
+//app.use("/process", processRouter);
