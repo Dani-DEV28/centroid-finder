@@ -29,13 +29,13 @@ public class frameExt {
             while ((frame = grabber.grabImage()) != null  && frameNumber < totalFrames) {
                 if (frameNumber % frameRate == 0) { // roughly 1 frame per second (if 30 FPS)
                     BufferedImage image = converter.convert(frame);
-                    String fileName = String.format("%sframe_%05d.png", outputDir, frameNumber);
-                    ImageIO.write(image, "png", new File(fileName));
+                    // String fileName = String.format("%sframe_%05d.png", outputDir, frameNumber);
+                    // ImageIO.write(image, "png", new File(fileName));
 
                     // ✅ Call ImageSummaryApp on this saved frame
-                    String[] imageArgs = { fileName, hexTargetColor, String.valueOf(threshold) };
+                    String[] imageArgs = { hexTargetColor, String.valueOf(threshold) };
                     System.out.println("About to pass imageArgs: " + Arrays.toString(imageArgs));
-                    ImageSummaryApp.main(imageArgs);
+                    ImageSummaryApp.main(image, imageArgs);
                 }
                 frameNumber++;
             }

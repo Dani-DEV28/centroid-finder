@@ -2,7 +2,10 @@ package com.centroidfinder;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Files;
 import java.util.List;
 import javax.imageio.ImageIO;
 
@@ -37,7 +40,7 @@ import javax.imageio.ImageIO;
  * java ImageSummaryApp <input_image> <hex_target_color> <threshold>
  */
 public class ImageSummaryApp {
-    public static void main(String[] args) {
+    public static void main(BufferedImage image, String[] args) {
         System.out.println("ISA boot");
         // if (args.length < 3) {
         //     System.out.println("Usage: java ImageSummaryApp <input_image> <hex_target_color> <threshold>");
@@ -45,23 +48,23 @@ public class ImageSummaryApp {
         // } // can be ignore, but just checking is parameter are present
 
         // String inputImagePath = args[0];
-        // String hexTargetColor = args[1];
-        // int threshold = 0; // related to try catch line 41-46
-        // try {
-        //     threshold = Integer.parseInt(args[2]);
-        // } catch (NumberFormatException e) {
-        //     System.err.println("Threshold must be an integer.");
-        //     return;
-        // }
-
-        BufferedImage inputImage = null;
+        String hexTargetColor = args[0];
+        int threshold = 0; // related to try catch line 41-46
         try {
-            inputImage = ImageIO.read(new File(inputImagePath));
-        } catch (Exception e) {
-            System.err.println("Error loading image: " + inputImagePath);
-            e.printStackTrace();
+            threshold = Integer.parseInt(args[1]);
+        } catch (NumberFormatException e) {
+            System.err.println("Threshold must be an integer.");
             return;
         }
+
+        // BufferedImage inputImage = null;
+        // try {
+        //     inputImage = ImageIO.read(new File(inputImagePath));
+        // } catch (Exception e) {
+        //     System.err.println("Error loading image: " + inputImagePath);
+        //     e.printStackTrace();
+        //     return;
+        // }
 
         // Parse the target color from a hex string (format RRGGBB) into a 24-bit
         // integer (0xRRGGBB)
@@ -78,22 +81,22 @@ public class ImageSummaryApp {
         ImageBinarizer binarizer = new DistanceImageBinarizer(distanceFinder, targetColor, threshold);
 
         // Binarize the input image.
-        int[][] binaryArray = binarizer.toBinaryArray(inputImage);
-        BufferedImage binaryImage = binarizer.toBufferedImage(binaryArray);
+        // int[][] binaryArray = binarizer.toBinaryArray(image);
+        // BufferedImage binaryImage = binarizer.toBufferedImage(binaryArray); //Binarized Image
 
-        String outputDir = "sampleOutput/processedFrames/";
-        new File(outputDir).mkdirs();
+        // String outputDir = "sampleOutput/processedFrames/";
+        // new File(outputDir).mkdirs();
 
-        File file = new File(inputImagePath);
-        String filePath = String.format("%sbinarized_%s", outputDir, file.getName());
-        // Write the binarized image to disk as "binarized.png".
-        try {
-            ImageIO.write(binaryImage, "png", new File(filePath));
-            System.out.println("Binarized image saved as binarized.png");
-        } catch (Exception e) {
-            System.err.println("Error saving binarized image.");
-            e.printStackTrace();
-        }
+        // File file = new File(inputImagePath);
+        // String filePath = String.format("%sbinarized_%s", outputDir, file.getName());
+        // // Write the binarized image to disk as "binarized.png".
+        // try {
+        //     ImageIO.write(binaryImage, "png", new File(filePath));
+        //     System.out.println("Binarized image saved as binarized.png");
+        // } catch (Exception e) {
+        //     System.err.println("Error saving binarized image.");
+        //     e.printStackTrace();
+        // }
 
         // Create an ImageGroupFinder using a BinarizingImageGroupFinder with a
         // DFS-based BinaryGroupFinder.
@@ -102,28 +105,52 @@ public class ImageSummaryApp {
         // Find connected groups in the input image.
         // The BinarizingImageGroupFinder is expected to internally binarize the image,
         // then locate connected groups of white pixels.
-        List<Group> groups = groupFinder.findConnectedGroups(inputImage);
+        List<Group> groups = groupFinder.findConnectedGroups(image);
 
-        String outputDirCSV = "sampleOutput/CSV/";
+        String outputDirCSV = "processor/sampleOutput/CSV/";
         new File(outputDirCSV).mkdirs();
 
-        int dotIndex = file.getName().lastIndexOf('.');
-        String noExt = file.getName().substring(0, dotIndex);
-        String filePathCSV = String.format("%sgroups_%s.csv", outputDirCSV, noExt);
+        // int dotIndex = file.getName().lastIndexOf('.');
+        // String noExt = file.getName().substring(0, dotIndex);
+        
+        String filePathCSV = outputDirCSV + "groups_master.csv";
 
         // frameNumber / frameRate gives seconds
 
         // Write the groups information to a CSV file "groups.csv".
-        try (PrintWriter writer = new PrintWriter(filePathCSV)) {
-            for (Group group : groups) {
-                writer.println(group.toCsvRow());
-            }
-            System.out.println("Groups summary saved as groups.csv");
-        } catch (Exception e) {
-            System.err.println("Error writing groups.csv");
-            e.printStackTrace();
+
+    try {
+        // Count how many lines are already in the CSV to get next line index
+        long lineCount = 0;
+        File csvFile = new File(filePathCSV);
+        if (csvFile.exists()) {
+            lineCount = Files.lines(csvFile.toPath()).count();
         }
 
-        System.out.println("Program Ends");
+            try (PrintWriter writer = new PrintWriter(new FileWriter(filePathCSV, true))) {
+                if (!groups.isEmpty()) {
+                    Group firstGroup = groups.get(0);
+
+                    // Convert the group to CSV row and split by comma
+                    String[] parts = firstGroup.toCsvRow().split(",");
+
+                    if (parts.length >= 3) {
+                        long lineNumber = lineCount + 1; // Next line index
+                        writer.printf("%d,%s,%s%n", lineNumber, parts[1].trim(), parts[2].trim());
+                        System.out.printf("Wrote line %d → %s,%s%n", lineNumber, parts[1].trim(), parts[2].trim());
+                    } else {
+                        System.out.println("Group row does not have enough columns.");
+                    }
+
+                } else {
+                    System.out.println("No groups found in this image.");
+                }
+
+            }
+
+        } catch (Exception e) {
+            System.err.println("Error writing groups_master.csv");
+            e.printStackTrace();
+        }
     }
 }
