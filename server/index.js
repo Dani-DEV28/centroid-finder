@@ -9,3 +9,5 @@ const app = express()
 app.use("/api", apiRouter);
 app.use("/thumbnail", tumbRouter);
 //app.use("/process", processRouter);
+
+app.listen(3000, console.log(`Server running at http://localhost:${PORT}`));
