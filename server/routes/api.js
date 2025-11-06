@@ -1,7 +1,23 @@
-import { Router } from "express";
+//Dani - Generate AI
 
-const router = Router();
+import express from "express";
+import fs from "fs";
+import path from "path";
 
-router.get("/api",);
+const router = express.Router();
+
+const videoDir = process.env.VIDEO_DIR;
+
+// GET /api/videos
+router.get("/videos", (req, res) => {
+  fs.readdir(videoDir, (err, files) => {
+    if (err) {
+      return res.status(500).json({ error: "Error reading video directory" });
+    }
+    // Filter only video files
+    const videoFiles = files.filter(file => /\.(mp4|mov|avi)$/i.test(file));
+    res.json(videoFiles);
+  });
+});
 
 export default router;

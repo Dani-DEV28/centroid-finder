@@ -5,26 +5,25 @@ import java.io.IOException;
 
 public class VideoProcessor {
     public static void main(String[] args) {
-        // if (args.length < 3) {
-        //     System.out.println("Usage: java VideoProcessor <videoPath> <hex_target_color> <threshold>");
-        //     return;
-        // } // can be ignore, but just checking is parameter are present
+        if (args.length < 3) {
+            System.out.println("Usage: java VideoProcessor <videoPath> <hex_target_color> <threshold>");
+            return;
+        } // can be ignore, but just checking is parameter are present
 
-        // String videoPath = args[0];
-        // String hexTargetColor = args[1];
-        // int threshold = 0;
-        // try {
-        //     threshold = Integer.parseInt(args[2]);
-        // } catch (NumberFormatException e) {
-        //     System.err.println("Threshold must be an integer.");
-        //     return;
-        // }
+        String videoPath = args[0];
+        String hexTargetColor = args[1];
+        int threshold = 0;
+        try {
+            threshold = Integer.parseInt(args[2]);
+        } catch (NumberFormatException e) {
+            System.err.println("Threshold must be an integer.");
+            return;
+        }
 
-        String videoPath = "./processor/sampleInput/ensantina.mp4"; // path to your input video
-        String outputDir = "sampleOutput/frames/"; // directory to save extracted frames
+        // String videoPath = "./processor/sampleInput/ensantina.mp4"; // path to your input video
 
-        String hexTargetColor = "FFA200";
-        int threshold = 164; 
+        // String hexTargetColor = "FFA200";
+        // int threshold = 164; 
 
         String outputDirCSV = "processor/sampleOutput/CSV/";
         new File(outputDirCSV).mkdirs();
@@ -52,7 +51,7 @@ public class VideoProcessor {
             System.err.println("Error creating groups_master.csv: " + e.getMessage());
         }
 
-        frameExt.processVideo(videoPath, outputDir, hexTargetColor, threshold);
+        frameExt.processVideo(videoPath, hexTargetColor, threshold);
 
         System.out.println("Frame extraction completed!");
     }

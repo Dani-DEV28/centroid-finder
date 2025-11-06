@@ -1,12 +1,37 @@
-import express from 'express';
-import apiRouter from './routes/api.js';
-import thumbnailRouter from './routes/thumbnail.js'; // <-- separate file for thumbnail
+//Daniel - AI generate
 
-const app = express();
-const PORT = 3000;
+import express from "express";
+import dotenv from "dotenv";
+import path from "path";
 
-// Mount routers
-app.use('/api', apiRouter);
-app.use('/thumbnail', thumbnailRouter);
+import apiRoutes from "./routes/api.js";
+import thumbnailRoutes from "./routes/thumbnail.js";
+import processRoutes from "./routes/process.js";
+
+dotenv.config();
+
+const app = express({ path: path.resolve("../.env") });
+const PORT = process.env.PORT || 3000;
+
+// Serve static directories
+// Makes videos accessible at /videos/VIDEO_NAME
+app.use("/videos", express.static(path.resolve(process.env.VIDEO_DIR)));
+// Makes processed results accessible at /results/RESULT_FILE
+app.use("/results", express.static(path.resolve(process.env.RESULTS_DIR)));
+
+// Mount API routes
+app.use("/api", apiRoutes);          // /api/videos
+app.use("/thumbnail", thumbnailRoutes); // /thumbnail/:filename
+app.use("/process", processRoutes);     // /process/:filename and /process/:jobId/status
+
+// Basic health check route (optional)
+app.get("/", (req, res) => {
+  res.send("Salamander Video Processing Server is running!");
+});
 
 app.listen(PORT, () => console.log(`Server running at http://localhost:${PORT}`));
+
+// Start the server
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
