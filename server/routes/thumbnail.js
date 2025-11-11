@@ -1,42 +1,35 @@
-import express from 'express';
-import fs from 'fs';
-import path from 'path';
-import ffmpeg from 'fluent-ffmpeg';
-import { tmpdir } from 'os';
+//Daniel - generate AI
+
+import express from "express";
+import ffmpeg from "fluent-ffmpeg";
+import path from "path";
 
 const router = express.Router();
+const videoDir = process.env.VIDEO_DIR;
 
-// Directory where your videos are stored
-const VIDEOS_DIR = path.join(process.cwd(), 'videos');
-
-router.get('/:filename', (req, res) => {
+// GET /thumbnail/:filename
+router.get("/:filename", (req, res) => {
   const { filename } = req.params;
-  const videoPath = path.join(VIDEOS_DIR, filename);
+  const videoPath = path.join(videoDir, filename);
 
-  // Check if file exists
-  if (!fs.existsSync(videoPath)) {
-    return res.status(404).json({ error: 'Video file not found' });
-  }
+  res.type("jpeg");
 
-  // Temporary file for thumbnail
-  const tmpFile = path.join(tmpdir(), `thumb-${Date.now()}.jpg`);
-
-  // Use ffmpeg to grab first frame
   ffmpeg(videoPath)
-    .frames(1) // grab only first frame
-    .output(tmpFile)
-    .on('end', () => {
-      res.sendFile(tmpFile, (err) => {
-        if (err) console.error(err);
-        // Clean up temporary file after sending
-        fs.unlink(tmpFile, () => {});
+    .screenshots({
+      count: 1,
+      timemarks: ["0"], // first frame
+      filename: "thumbnail.jpg",
+      folder: "/tmp" // temporary folder
+    })
+    .on("end", function() {
+      res.sendFile("/tmp/thumbnail.jpg", err => {
+        if (err) res.status(500).json({ error: "Error generating thumbnail" });
       });
     })
-    .on('error', (err) => {
+    .on("error", function(err) {
       console.error(err);
-      res.status(500).json({ error: 'Error generating thumbnail' });
-    })
-    .run();
+      res.status(500).json({ error: "Error generating thumbnail" });
+    });
 });
 
 export default router;

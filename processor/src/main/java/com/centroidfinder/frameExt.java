@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 public class frameExt {
-    public static void processVideo(String videoPath, String outputDir, String hexTargetColor, int threshold){
+    public static void processVideo(String videoPath, String hexTargetColor, int threshold){
 
         try (FFmpegFrameGrabber grabber = new FFmpegFrameGrabber(videoPath);
             Java2DFrameConverter converter = new Java2DFrameConverter()){

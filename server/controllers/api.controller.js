@@ -25,7 +25,7 @@ export const getVideos = (req, res) => {
 
         console.log(mp4Files);
 
-        res.status(200).send(mp4Files);
+        res.status(200).json(mp4Files);
 
     } catch (err) {
         console.error('Error reading folder:', err);

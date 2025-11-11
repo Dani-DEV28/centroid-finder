@@ -10,19 +10,22 @@
 
 
 centroid-finder/
-├── .github
+├── .github/
 ├── .gitignore
 ├── LICENSE
 ├── README.md
 ├── plan.md
-├── serverPlan.md
-├── .env                  
-├── server/              
-│   ├── package.json
-│   ├── index.js
-│   ├── process.js
-│   ├── thumbnail.js
-│   └── api.js
+├── serverPlan.md # <-- This plan
+├── .env # Environment variables
+├── server/ # Express server
+│ ├── package.json
+│ ├── index.js
+│ ├── routes/
+│ │ ├── api.js
+│ │ ├── thumbnail.js
+│ │ └── process.js
+│ └── utils/
+│ └──── jobManager.js
 ├── processor/            
    ├── pom.xml
    ├── sampleInput
