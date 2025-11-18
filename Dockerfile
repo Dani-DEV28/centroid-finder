@@ -41,9 +41,9 @@ WORKDIR /app
 COPY --from=build-env /app/processor/target/*.jar /app/batch.jar
 COPY --from=build-env /app/server /app/server
 
-# Copy a small start script that launches both services and forwards signals
-COPY start.sh /app/start.sh
-RUN chmod +x /app/start.sh
+# # Copy a small start script that launches both services and forwards signals
+# COPY start.sh /app/start.sh
+# RUN chmod +x /app/start.sh
 
 # Default envs (override at runtime)
 ENV PORT=3000
@@ -52,4 +52,9 @@ ENV JAR_PATH=/app/batch.jar
 
 EXPOSE 3000
 
-CMD ["/app/start.sh"]
+CMD ["sh","-c","set -euo pipefail; \
+  java -jar \"${JAR_PATH:-/app/batch.jar}\" & JAVA_PID=$!; \
+  node /app/server/index.js & NODE_PID=$!; \
+  term() { echo 'Shutting down'; kill -TERM \"$NODE_PID\" 2>/dev/null || true; kill -TERM \"$JAVA_PID\" 2>/dev/null || true; wait; }; \
+  trap term SIGTERM SIGINT; \
+  wait -n; term; sleep 1"]
