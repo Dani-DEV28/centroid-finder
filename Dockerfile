@@ -1,14 +1,13 @@
 #Base image (java + maven)
 FROM maven:3.9.8-eclipse-temurin-21 AS build-env
 
-
 # Set working dir
 WORKDIR /app
 
-# Install Node.js in runtime image
-RUN apt-get update && apt-get install -y curl \
-    && curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
-    && apt-get install -y nodejs
+# Copy Java processor module
+COPY processor /app/processor
+
+
 
 # Copy Java processor module
 COPY processor /app/processor
