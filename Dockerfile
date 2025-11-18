@@ -18,8 +18,8 @@ COPY server /app/server
 WORKDIR /app/processor
 RUN mvn clean package -DskipTests
 
-# Copy Node API
-COPY server /app/server
+# # Copy Node API
+# COPY server /app/server
 
 # Build Node.js API
 WORKDIR /app/server
@@ -28,15 +28,28 @@ RUN npm install --production
 # Final runtime image
 FROM eclipse-temurin:21-jdk
 
+# Install node & ffmpeg in final image
+RUN apt-get update && apt-get install -y curl ca-certificates ffmpeg \
+    && curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
+    && apt-get install -y nodejs \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Set working directory
 WORKDIR /app
 
-# Copy Java JAR from build stage
-COPY --from=build-env /app/processor/target/*.jar batch.jar
+# Copy Java JAR and Node API from build stage
+COPY --from=build-env /app/processor/target/*.jar /app/batch.jar
+COPY --from=build-env /app/server /app/server
 
-# Copy Node API from build stage
-COPY --from=build-env /app/server server
+# Copy a small start script that launches both services and forwards signals
+COPY start.sh /app/start.sh
+RUN chmod +x /app/start.sh
 
-# Run both Java batch job + Node API
-CMD ["bash", "-c", "java -jar batch.jar & node server/index.js"]
+# Default envs (override at runtime)
+ENV PORT=3000
+ENV JAR_PATH=/app/batch.jar
+# Do not hardcode VIDEOS_DIR/RESULTS_DIR here; pass via -e or a mounted .env if needed
+
+EXPOSE 3000
+
+CMD ["/app/start.sh"]
