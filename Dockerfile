@@ -1,52 +1,49 @@
-# =========================
-# Build Stage (Java + Node)
-# =========================
+# ...existing code...
+# Multi-stage build: build Java processor and Node server, produce runtime image
 FROM maven:3.9.8-eclipse-temurin-21 AS build-env
 
-# Set working directory
 WORKDIR /app
 
-# Copy Java processor module
-COPY processor /app/processor
+# Install node + ffmpeg in build stage so we can run npm if needed
+RUN apt-get update && apt-get install -y curl ffmpeg ca-certificates \
+  && curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
+  && apt-get install -y nodejs \
+  && rm -rf /var/lib/apt/lists/*
 
-# Build Java batch job (skip tests to speed up build)
+# Copy and build Java processor
+COPY processor /app/processor
 WORKDIR /app/processor
 RUN mvn clean package -DskipTests
 
-# Copy Node API
+# Copy server and install production deps
 COPY server /app/server
-
-# Install Node dependencies for production
-# Note: Node is not installed here yet, but we can still copy package.json for caching
 WORKDIR /app/server
-RUN apt-get update && apt-get install -y curl \
-    && curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
-    && apt-get install -y nodejs \
-    && npm install --production
+RUN npm ci --production
 
+# Final runtime image
 FROM eclipse-temurin:21-jdk
 
-# Install Node.js in the final runtime image
-RUN apt-get update && apt-get install -y curl gnupg ca-certificates \
-    && curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
-    && apt-get install -y nodejs
+# Install node + ffmpeg in final image (needed by fluent-ffmpeg)
+RUN apt-get update && apt-get install -y curl ffmpeg ca-certificates \
+  && curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
+  && apt-get install -y nodejs \
+  && rm -rf /var/lib/apt/lists/*
 
-# Set working directory
 WORKDIR /app
 
-# Copy Java JAR from build stage
-COPY --from=build-env /app/processor/target/*.jar batch.jar
+# Copy built JAR and server from build stage
+COPY --from=build-env /app/processor/target/centroid-finder-1.0-SNAPSHOT-jar-with-dependencies.jar /app/batch.jar
+COPY --from=build-env /app/server /app/server
 
-# Copy Node API from build stage
-COPY --from=build-env /app/server server
-
-# Install Node dependencies in final image
-WORKDIR /app/server
-RUN npm install --production
-
-# Run both Java batch job and Node API
-# Java runs in background (&), Node runs in foreground
-# CMD ["bash", "-c", "java -jar ../batch.jar & node index.js"]
-# ...existing code...
+# Expose API port and sensible defaults
+ENV PORT=3000
+ENV JAR_PATH=/app/batch.jar
 EXPOSE 3000
-CMD ["sh","-c","java -jar /app/batch.jar & node /app/server/index.js"]
+
+# Default: run only the Node API (change to run the JAR once you have a runnable jar)
+# CMD ["node", "/app/server/index.js"]
+
+# If you want to run both Java and Node from this image (less robust),
+# replace the CMD above with:
+CMD ["sh","-c","java -jar \"${JAR_PATH}\" & node /app/server/index.js"]
+# ...existing code...

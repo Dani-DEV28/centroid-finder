@@ -8,33 +8,26 @@ import apiRoutes from "./routes/api.js";
 import thumbnailRoutes from "./routes/thumbnail.js";
 import processRoutes from "./routes/process.js";
 
+// Optional: try loading .env if it exists (won’t break if missing)
 dotenv.config({ path: path.resolve("../.env") });
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Read either env name (backwards-compatible) and guard undefined
-const videosDir = process.env.VIDEOS_DIR || process.env.VIDEO_DIR || "";
-const resultsDir = process.env.RESULTS_DIR || process.env.RESULTS_DIR || "";
+// Provide fallback paths that match the Docker volume mounts
+const videoDir = process.env.VIDEO_DIR || "/videos";
+const resultsDir = process.env.RESULTS_DIR || "/results";
 
-if (videosDir) {
-  app.use("/videos", express.static(path.resolve(videosDir)));
-} else {
-  console.warn("VIDEOS_DIR / VIDEO_DIR not set — /videos static route not mounted");
-}
-
-if (resultsDir) {
-  app.use("/results", express.static(path.resolve(resultsDir)));
-} else {
-  console.warn("RESULTS_DIR not set — /results static route not mounted");
-}
+// Serve static directories
+app.use("/videos", express.static(videoDir));
+app.use("/results", express.static(resultsDir));
 
 // Mount API routes
-app.use("/api", apiRoutes);          // /api/videos
-app.use("/thumbnail", thumbnailRoutes); // /thumbnail/:filename
-app.use("/process", processRoutes);     // /process/:filename and /process/:jobId/status
+app.use("/api", apiRoutes);
+app.use("/thumbnail", thumbnailRoutes);
+app.use("/process", processRoutes);
 
-// Basic health check route (optional)
+// Health check
 app.get("/", (req, res) => {
   res.send("Salamander Video Processing Server is running!");
 });
