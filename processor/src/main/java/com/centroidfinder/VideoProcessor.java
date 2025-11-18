@@ -5,16 +5,16 @@ import java.io.IOException;
 
 public class VideoProcessor {
     public static void main(String[] args) {
-        if (args.length < 3) {
+        if (args.length < 1) {
             System.out.println("Usage: java VideoProcessor <videoPath> <hex_target_color> <threshold>");
             return;
         } // can be ignore, but just checking is parameter are present
 
         String videoPath = args[0];
-        String hexTargetColor = args[1];
+        String hexTargetColor = args.length > 1 ? args[1] : "FFA200"; // default to orange if not provided
         int threshold = 0;
         try {
-            threshold = Integer.parseInt(args[2]);
+            threshold = Integer.parseInt(args[2]) > 0 ? Integer.parseInt(args[2]) : 164; // default to 164 if not provided
         } catch (NumberFormatException e) {
             System.err.println("Threshold must be an integer.");
             return;
