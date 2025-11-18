@@ -13,11 +13,21 @@ dotenv.config({ path: path.resolve("../.env") });
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Serve static directories
-// Makes videos accessible at /videos/VIDEO_NAME
-app.use("/videos", express.static(path.resolve(process.env.VIDEO_DIR)));
-// Makes processed results accessible at /results/RESULT_FILE
-app.use("/results", express.static(path.resolve(process.env.RESULTS_DIR)));
+// Read either env name (backwards-compatible) and guard undefined
+const videosDir = process.env.VIDEOS_DIR || process.env.VIDEO_DIR || "";
+const resultsDir = process.env.RESULTS_DIR || process.env.RESULTS_DIR || "";
+
+if (videosDir) {
+  app.use("/videos", express.static(path.resolve(videosDir)));
+} else {
+  console.warn("VIDEOS_DIR / VIDEO_DIR not set — /videos static route not mounted");
+}
+
+if (resultsDir) {
+  app.use("/results", express.static(path.resolve(resultsDir)));
+} else {
+  console.warn("RESULTS_DIR not set — /results static route not mounted");
+}
 
 // Mount API routes
 app.use("/api", apiRoutes);          // /api/videos
