@@ -1,17 +1,11 @@
-import { Router } from "express";
+import express from "express";
 import { getVideos } from "../controllers/api.controller.js";
 
 //Dani - Generate AI
-
-
-import express from "express";
 import fs from "fs";
-import path from "path";
-
-
-router.get("/api", getVideos);
 
 const router = express.Router();
+router.get("/api", getVideos);
 
 const videoDir = process.env.VIDEO_DIR;
 

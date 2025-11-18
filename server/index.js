@@ -8,9 +8,9 @@ import apiRoutes from "./routes/api.js";
 import thumbnailRoutes from "./routes/thumbnail.js";
 import processRoutes from "./routes/process.js";
 
-dotenv.config();
+dotenv.config({ path: path.resolve("../.env") });
 
-const app = express({ path: path.resolve("../.env") });
+const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Serve static directories
@@ -30,8 +30,3 @@ app.get("/", (req, res) => {
 });
 
 app.listen(PORT, () => console.log(`Server running at http://localhost:${PORT}`));
-
-// Start the server
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
