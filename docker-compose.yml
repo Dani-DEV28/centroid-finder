@@ -5,14 +5,21 @@ services:
     build: ./processor
     container_name: java_api
     ports:
-      - "8080:8080"
+      - "9080:8080"
 
   express_api:
-    build: ./server
-    container_name: express_api
+    build: 
+      context: ./server
+      dockerfile: Dockerfile
+    image: ghcr.io/dani-dev28/salamander:latest
     ports:
       - "3000:3000"
+    volumes:
+      - "C:/path/to/videos:/videos"
+      - "C:/path/to/results:/results"
     environment:
-      JAVA_API_URL: "http://java_api:8080"
+      - VIDEO_DIR=/videos
+      - RESULTS_DIR=/results
+      # - JAVA_API_URL=http://java_api:8080
     depends_on:
       - java_api
