@@ -5,7 +5,7 @@ WORKDIR /app
 ENV VIDEO_DIR=/videos
 ENV RESULTS_DIR=/results
 ENV PORT=3000
-ENV JAR_PATH=/app/processor/app.jar
+ENV JAR_PATH=app.jar
 
 # indicate intended mount points (does not bind host paths)
 VOLUME ["/videos", "/results"]

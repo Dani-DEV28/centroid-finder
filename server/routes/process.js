@@ -28,6 +28,12 @@ router.post("/:filename", (req, res) => {
     stdio: "ignore"
   });
 
+  // prevent unhandled error event
+  child.on("error", (err) => {
+    console.error("Failed to start java process:", err);
+    failJob(jobId, `Failed to start java: ${err.message}`);
+  });
+
   child.unref(); // Allow child to run independently
 
   // When process exits, update job status
