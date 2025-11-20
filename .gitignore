@@ -22,3 +22,18 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
+
+# Ai suggestion
+target/
+.idea/
+.vscode/
+*.iml
+
+sampleOutput/frames/
+sampleOutput/processedFrames/
+sampleOutput/CSV/
+server/node_modules/
+
+*.csv
+
+*.mp4

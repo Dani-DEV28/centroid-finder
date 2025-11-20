@@ -23,3 +23,7 @@ We will be using lists
 
 ## Wave 6 Notes
 
+
+<!-- Must be called in the processor dir -->
+java -jar target/centroid-finder-1.0-SNAPSHOT-jar-with-dependencies.jar ../processor/sampleInput/ensantina.mp4 FFA200 164
+
