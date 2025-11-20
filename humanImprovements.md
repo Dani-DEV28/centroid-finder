@@ -1,7 +1,8 @@
 # Improvements
 - ## refactoring code
   - What improvements can you make to the design/architecture of your code?
-    - Example Answer
+    - Possibly put some code in from the router files into a exported function 
+    storted in the controllers folder 
   - How can you split up large methods or classes into smaller components?
   - Are there unused files/methods that can be removed?
   - Where would additional Java interfaces be appropriate?
@@ -9,7 +10,9 @@
   - Other refactoring improvements?
 - ## adding tests
   - What portions of your code are untested / only lightly tested?
+    - The api routes
   - Where would be the highest priority places to add new tests?
+    - For the api routes
   - Other testing improvements?
 - ## improving error handling
   - What parts of your code are brittle?
@@ -19,9 +22,13 @@
   - Other error handling improvements>
 - ## writing documentation
   - What portions of your code are missing Javadoc/JSdoc for the methods/classes?
+    - frameExt.java
+    - VideoProcessor.java
   - What documentation could be made clearer or improved?
   - Are there sections of dead code that are commented out?
+    - Yes, in a couple files
   - Where would be the most important places to add documentation to make your code easier to read?
+    - The server files
   - Other documentation improvements?
 - ## improving performance (optional)
   - What parts of your code / tests / Docker image run particularly slowly?
