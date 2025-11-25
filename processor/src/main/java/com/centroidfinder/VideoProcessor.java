@@ -14,7 +14,7 @@ public class VideoProcessor {
         String hexTargetColor = args.length > 1 && !args[1].isEmpty() ? args[1] : "FFA200"; // default to orange if not provided
         
         int threshold = 164; // default
-        if (args.length > 2) {
+        if (args.length > 2) { // check for the presence of threshold argument, and parse it to integer
             try {
                 int parsed = Integer.parseInt(args[2]);
                 threshold = parsed > 0 ? parsed : threshold;
@@ -23,17 +23,12 @@ public class VideoProcessor {
             }
         }
 
-        // String videoPath = "./processor/sampleInput/ensantina.mp4"; // path to your input video
-
-        // String hexTargetColor = "FFA200";
-        // int threshold = 164; 
-
-        String outputPath = args.length > 3 ? args[3] : "processor/sampleOutput/CSV/groups_master.csv";
+        String outputPath = args.length > 3 ? args[3] : "processor/sampleOutput/CSV/groups_master.csv"; // default output path, or use provided one
         File csvFile = new File(outputPath);
 
         new File(csvFile.getParent()).mkdirs();
 
-        if (csvFile.exists() && !csvFile.delete()) {
+        if (csvFile.exists() && !csvFile.delete()) { // to ensure that old file is deleted before creating a new one
             System.err.println("Failed to delete existing file: " + outputPath);
         }
 
@@ -47,33 +42,6 @@ public class VideoProcessor {
             System.err.println("Error creating file: " + e.getMessage());
             return;
         }
-        
-        // String filePathCSV = outputDirCSV + "groups_master.csv";
-
-        // Delete the file if it exists, then recreate a fresh one
-        // File csvFile = new File(filePathCSV);
-        // if (csvFile.exists()) {
-        //     if (csvFile.delete()) {
-        //         System.out.println("Old groups_master.csv deleted.");
-        //     } else {
-        //         System.err.println("Failed to delete existing groups_master.csv.");
-        //     }
-        // }
-
-        // // Create a new, empty file
-        // try {
-        //     if (csvFile.createNewFile()) {
-        //         System.out.println("New groups_master.csv created.");
-        //     } else {
-        //         System.out.println("groups_master.csv already exists or couldn't be created.");
-        //     }
-        // } catch (IOException e) {
-        //     System.err.println("Error creating groups_master.csv: " + e.getMessage());
-        // }
-
-        // frameExt.processVideo(videoPath, hexTargetColor, threshold);
-
-        // System.out.println("Frame extraction completed!");
 
         try {
             frameExt.processVideo(videoPath, hexTargetColor, threshold);
