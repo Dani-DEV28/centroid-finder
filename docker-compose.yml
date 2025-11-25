@@ -1,25 +1,25 @@
 version: "3.9"
 
 services:
-  java_api:
-    build: ./processor
-    container_name: java_api
-    ports:
-      - "9080:8080"
+  # java_api:
+  #   build: ./processor
+  #   container_name: java_api
+  #   ports:
+  #     - "9080:8080"       # External host port 9080 -> container 8080
 
   express_api:
     build: 
-      context: ./server
+      context: .
       dockerfile: Dockerfile
     image: ghcr.io/dani-dev28/salamander:latest
     ports:
-      - "3000:3000"
+      - "3000:3000"       # External host port 3000 -> container 3000
     volumes:
       - "C:/path/to/videos:/videos"
       - "C:/path/to/results:/results"
     environment:
-      - VIDEO_DIR=/videos
-      - RESULTS_DIR=/results
-      # - JAVA_API_URL=http://java_api:8080
-    depends_on:
-      - java_api
+      VIDEO_DIR: /videos
+      RESULTS_DIR: /results
+      PORT: 3000
+      JAR_PATH: /app/app.jar
+    restart: unless-stopped

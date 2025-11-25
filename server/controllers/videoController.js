@@ -1,4 +1,6 @@
 import { getVideoList, processVideoJob, getJobStatus } from '../services/videoServices.js';
+import fs from "fs";
+// import fetch from 'node-fetch';
 
 export const getVideos = (req, res) => {
     try {
@@ -7,6 +9,17 @@ export const getVideos = (req, res) => {
     } catch (err) {
         res.status(500).json({ error: "Error reading video directory" });
     }
+};
+
+export const checkJar = (req, res) => {
+  try {
+    if (!fs.existsSync(process.env.JAR_PATH))
+      return res.status(500).json({ status: "missing JAR" });
+
+    res.status(200).json({ status: "ready", jar: process.env.JAR_PATH });
+  } catch (err) {
+    res.status(500).json({ status: "error", message: err.message });
+  }
 };
 
 export const getThumbnail = (req, res) => {

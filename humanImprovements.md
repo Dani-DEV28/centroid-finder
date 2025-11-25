@@ -3,6 +3,7 @@
   - What improvements can you make to the design/architecture of your code?
     - Possibly put some code in from the router files into a exported function 
     storted in the controllers folder 
+    - fix the Main java, since the code output path ignores anything from Node
   - How can you split up large methods or classes into smaller components?
   - Are there unused files/methods that can be removed?
     - None from what I know

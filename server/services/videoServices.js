@@ -1,12 +1,34 @@
 import fs from 'fs';
-import path from 'path';
+// import path from 'path';
 import { spawn } from 'child_process';
 import { v4 as uuidv4 } from 'uuid';
 import { jobs } from '../utils/jobManager.js';
 
-const VIDEO_DIR = path.join(process.cwd(), 'server', 'videos');
-const OUTPUT_DIR = path.join(process.cwd(), 'processor', 'sampleOutput');
-const JAR_PATH = path.join(process.cwd(), 'processor', 'target', 'centroid-finder-1.0-SNAPSHOT.jar');
+const JAR_PATH = process.env.JAR_PATH; // "/app/app.jar"
+const VIDEO_DIR = process.env.VIDEO_DIR;
+const RESULTS_DIR = process.env.RESULTS_DIR;
+
+
+// export const checkJar = () => {
+//     try {
+//         // Synchronously run `java -jar <JAR_PATH>` with no arguments to test if it executes
+//         const result = spawnSync('java', ['-jar', JAR_PATH], { encoding: 'utf-8' });
+
+//         if (result.error) {
+//             return { status: 'error', message: result.error.message };
+//         }
+
+//         // If the process prints usage info, consider it "ok"
+//         if (result.stdout.includes('Usage:') || result.stderr.includes('Usage:')) {
+//             return { status: 'ok', message: 'Java JAR is accessible and executable' };
+//         }
+
+//         // Any unexpected output can be returned for debugging
+//         return { status: 'ok', message: 'Java JAR executed successfully', stdout: result.stdout, stderr: result.stderr };
+//     } catch (err) {
+//         return { status: 'error', message: err.message };
+//     }
+// };
 
 export const getVideoList = () => {
     const files = fs.readdirSync(VIDEO_DIR);
@@ -14,16 +36,22 @@ export const getVideoList = () => {
 };
 
 export const processVideoJob = (filename, targetColor, threshold) => {
-    const inputPath = path.join(VIDEO_DIR, filename);
     const jobId = uuidv4();
-    const outputPath = path.join(OUTPUT_DIR, `${jobId}_${filename}.csv`);
+    const inputPath = `${VIDEO_DIR}/${filename}`;
+    const outputPath = `${RESULTS_DIR}/${jobId}.csv`;
 
-    const child = spawn('java', ['-jar', JAR_PATH, inputPath, outputPath, targetColor, threshold], {
+    const child = spawn("java", [
+        "-jar", JAR_PATH,
+        inputPath,
+        targetColor,
+        threshold,
+        outputPath
+    ], {
         detached: true,
-        stdio: 'ignore'
+        stdio: "ignore"
     });
 
-    jobs[jobId] = { status: 'processing', outputPath };
+    jobs[jobId] = { status: "processing", outputPath };
     child.unref();
 
     return { jobId };
