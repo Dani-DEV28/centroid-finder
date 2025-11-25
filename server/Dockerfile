@@ -14,7 +14,7 @@ VOLUME ["/videos", "/results"]
 COPY package*.json ./
 
 # install only production deps
-RUN npm install --omit=dev
+RUN npm install
 
 # copy source code
 COPY . .
