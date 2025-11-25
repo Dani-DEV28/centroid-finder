@@ -1,6 +1,10 @@
 import { getVideoList, processVideoJob, getJobStatus } from '../services/videoServices.js';
 import fs from "fs";
-// import fetch from 'node-fetch';
+import ffmpeg from "fluent-ffmpeg";
+import path from "path";
+import crypto from "crypto";
+
+const videoDir = process.env.VIDEO_DIR;
 
 export const getVideos = (req, res) => {
     try {
@@ -23,7 +27,35 @@ export const checkJar = (req, res) => {
 };
 
 export const getThumbnail = (req, res) => {
-    res.json({ message: 'No Thumbnail' });
+    const { filename } = req.params;
+
+    // Full path to the video
+    const videoPath = path.join(videoDir, filename);
+
+    // Check video exists
+    if (!fs.existsSync(videoPath)) {
+        return res.status(404).json({ error: "Video not found" });
+    }
+
+    const tmpName = crypto.randomBytes(8).toString("hex") + ".jpg";
+    const tmpPath = path.join("/tmp", tmpName);
+
+    ffmpeg(videoPath)
+        .screenshots({
+            count: 1,
+            timemarks: ["0"], // first frame
+            filename: tmpName,
+            folder: "/tmp" // temporary folder
+        })
+        .on("end", function() {
+            res.sendFile(tmpPath, err => {
+                if (err) res.status(500).json({ error: "Error generating thumbnail" });
+            });
+        })
+        .on("error", function(err) {
+            console.error(err);
+            res.status(500).json({ error: "Error generating thumbnail" });
+        });
 };
 
 export const processVideo = (req, res) => {

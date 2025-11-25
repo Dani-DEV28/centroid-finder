@@ -11,25 +11,23 @@ RUN mvn dependency:go-offline
 COPY processor/src ./src
 RUN mvn clean package -DskipTests
 
-
-
 # ============================
 # 2. Final Runtime Container
 # ============================
 FROM node:20-alpine
 
 # Install Java (required to run the JAR)
-RUN apk add --no-cache openjdk17-jre
+RUN apk add --no-cache openjdk17-jre ffmpeg bash
 
 WORKDIR /app
 
 # ----------------------------
 # Environment defaults
 # ----------------------------
-ENV VIDEO_DIR=/videos
-ENV RESULTS_DIR=/results
-ENV PORT=3000
-ENV JAR_PATH=/app/app.jar
+ENV VIDEO_DIR=/videos \
+    RESULTS_DIR=/results \
+    PORT=3000 \
+    JAR_PATH=/app/app.jar
 
 VOLUME ["/videos", "/results"]
 
@@ -37,7 +35,7 @@ VOLUME ["/videos", "/results"]
 # Install Node dependencies
 # ----------------------------
 COPY server/package*.json ./
-RUN npm install --production
+RUN npm ci --omit=dev
 
 # Copy Node server code
 COPY server/. .
