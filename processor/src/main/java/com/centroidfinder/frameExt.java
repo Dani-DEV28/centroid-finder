@@ -14,10 +14,10 @@ public class frameExt {
             grabber.start(); // open the video file
             int frameNumber = 0;
 
-            Frame frame;
+            Frame frame; // to hold each frame grabbed from the video
 
-            int frameRate = (int) Math.round(grabber.getFrameRate());
-            int totalFrames = grabber.getLengthInFrames();
+            int frameRate = (int) Math.round(grabber.getFrameRate()); //read the video file metadata to retrieve FPS, while Math rounds to nearest integer
+            int totalFrames = grabber.getLengthInFrames(); // get the total number of frames in the video to determine when to stop
 
             while ((frame = grabber.grabImage()) != null  && frameNumber < totalFrames) {
                 if (frameNumber % frameRate == 0) { // roughly 1 frame per second (if 30 FPS)

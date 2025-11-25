@@ -12,6 +12,7 @@
   - How can you make things simpler, more-usable, and easier to maintain?
     - Writting more documentation/comments
   - Other refactoring improvements?
+    - Changing the Dockerfile from and two file setup to a single Dockefile
 
 - ## adding tests
   - What portions of your code are untested / only lightly tested?
