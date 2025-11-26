@@ -3,11 +3,11 @@ import { getVideos, getThumbnail, processVideo, getStatus, checkJar} from '../co
 
 const router = Router();
 
+router.post('/process/:filename', processVideo);
+
 router.get('/api/health', checkJar);
 router.get('/videos', getVideos);
 router.get('/thumbnail/:filename', getThumbnail);
 router.get('/process/:jobId/status', getStatus);
-
-router.post('/process/filename', processVideo);
 
 export default router;

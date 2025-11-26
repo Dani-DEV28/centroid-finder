@@ -10,6 +10,7 @@
   - Where would additional Java interfaces be appropriate?
     - If I am understanding interface for the API, currently we are using the videoProcessor, but I would like to include an interface for the ImageSummaryApp to do Realtime binarizing of image on the frontend
   - How can you make things simpler, more-usable, and easier to maintain?
+    - Update Node and the java apk to 21 instead of 17
     - Writting more documentation/comments
   - Other refactoring improvements?
     - Changing the Dockerfile from and two file setup to a single Dockefile

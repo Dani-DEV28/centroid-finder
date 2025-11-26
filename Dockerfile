@@ -1,7 +1,7 @@
 # ============================
 # 1. Build Java JAR with Maven
 # ============================
-FROM maven:3.9.6-eclipse-temurin-17 AS build-java
+FROM maven:3.9.6-eclipse-temurin-21 AS build-java
 WORKDIR /processor
 
 # Copy processor module
@@ -14,10 +14,18 @@ RUN mvn clean package -DskipTests
 # ============================
 # 2. Final Runtime Container
 # ============================
-FROM node:20-alpine
+FROM eclipse-temurin:23-jre AS runtime
+
+# Install Node 25 + ffmpeg + bash
+# Debian-based since Temurin uses Ubuntu/Debian
+RUN apt-get update && \
+    apt-get install -y curl ffmpeg bash && \
+    curl -fsSL https://deb.nodesource.com/setup_25.x | bash - && \
+    apt-get install -y nodejs && \
+    apt-get clean
 
 # Install Java (required to run the JAR)
-RUN apk add --no-cache openjdk17-jre ffmpeg bash
+# RUN apk add --no-cache openjdk21-jre ffmpeg bash
 
 WORKDIR /app
 

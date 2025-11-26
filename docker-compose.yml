@@ -14,12 +14,17 @@ services:
     image: ghcr.io/dani-dev28/salamander:latest
     ports:
       - "3000:3000"       # External host port 3000 -> container 3000
-    volumes:
-      - "C:/path/to/videos:/videos"
-      - "C:/path/to/results:/results"
+    # volumes:
+    #   - "C:/path/to/videos:/videos"
+    #   - "C:/path/to/results:/results"
     environment:
       VIDEO_DIR: /videos
       RESULTS_DIR: /results
       PORT: 3000
       JAR_PATH: /app/app.jar
+
+    volumes:
+      - ./videos:/videos
+      - ./results:/results
+
     restart: unless-stopped
