@@ -3,27 +3,26 @@
   - What improvements can you make to the design/architecture of your code?
     - Possibly put some code in from the router files into a exported function 
     storted in the controllers folder 
-    - fix the Main java, since the code output path ignores anything from Node
   - How can you split up large methods or classes into smaller components?
   - Are there unused files/methods that can be removed?
     - None from what I know
   - Where would additional Java interfaces be appropriate?
     - If I am understanding interface for the API, currently we are using the videoProcessor, but I would like to include an interface for the ImageSummaryApp to do Realtime binarizing of image on the frontend
   - How can you make things simpler, more-usable, and easier to maintain?
-    - Update Node and the java apk to 21 instead of 17
     - Writting more documentation/comments
   - Other refactoring improvements?
-    - Changing the Dockerfile from and two file setup to a single Dockefile
 
 - ## adding tests
   - What portions of your code are untested / only lightly tested?
     - The api routes
+    - Added more tests for the videoProcessor
   - Where would be the highest priority places to add new tests?
     - For the api routes
   - Other testing improvements?
 
 - ## improving error handling
   - What parts of your code are brittle?
+    - FrameExt if image file was passed instead of a video
   - Where could you better be using exceptions?
     - Possibly in the server files
   - Where can you better add input validation to check invalid input?
