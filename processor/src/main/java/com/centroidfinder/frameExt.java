@@ -19,14 +19,20 @@ public class frameExt {
             int frameRate = (int) Math.round(grabber.getFrameRate()); //read the video file metadata to retrieve FPS, while Math rounds to nearest integer
             int totalFrames = grabber.getLengthInFrames(); // get the total number of frames in the video to determine when to stop
 
+            String[] imageArgs = { hexTargetColor, String.valueOf(threshold) }; //setting up for the arguement
+
+            if(totalFrames <= 1){ // images
+                frame = grabber.grabImage();
+                if(frame != null){
+                    frameExt.callingProcessor(converter, frame, imageArgs);
+                    System.out.println("✅ Processed single image file");
+                }
+                return;
+            }
+
             while ((frame = grabber.grabImage()) != null  && frameNumber < totalFrames) {
                 if (frameNumber % frameRate == 0) { // roughly 1 frame per second (if 30 FPS)
-                    BufferedImage image = converter.convert(frame);
-
-                    // ✅ Call ImageSummaryApp on this saved frame
-                    String[] imageArgs = { hexTargetColor, String.valueOf(threshold) };
-                    System.out.println("About to pass imageArgs: " + Arrays.toString(imageArgs));
-                    ImageSummaryApp.main(image, imageArgs);
+                    frameExt.callingProcessor(converter, frame, imageArgs);
                 }
                 frameNumber++;
             }
@@ -41,5 +47,12 @@ public class frameExt {
             System.err.println("Unexpected error: " + e.getMessage());
             e.printStackTrace();
         }
-    }   
+    }
+    
+    public static void callingProcessor(Java2DFrameConverter converter, Frame currentImg, String[] imageArgs){
+        BufferedImage image = converter.convert(currentImg);
+        // ✅ Call ImageSummaryApp on this saved frame
+        System.out.println("About to pass imageArgs: " + Arrays.toString(imageArgs));
+        ImageSummaryApp.main(image, imageArgs);
+    }
 }
