@@ -49,7 +49,7 @@ export const processVideoJob = (filename, targetColor, threshold) => {
         return { jobId };
     }
     
-    const child = spawn("java", ["-jar", JAR_PATH, inputPath, targetColor, threshold]);
+    const child = spawn("java", ["-jar", JAR_PATH, inputPath, targetColor, threshold, outputPath]);
 
     // if (!child) {
     //     throw new Error("Failed to spawn Java process");
