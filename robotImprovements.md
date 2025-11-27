@@ -40,3 +40,4 @@ Tasks:
   - Wrap child process spawning: attach `error` and `exit` handlers; update job state on failure.
 - Healthchecks:
   - Add `/api/health` and Docker `HEALTHCHECK` to Dockerfile that hits `/api/health`.
+- Unhandled Child process error in `videoServices`

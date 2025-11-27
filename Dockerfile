@@ -14,7 +14,7 @@ RUN mvn clean package -DskipTests
 # ============================
 # 2. Final Runtime Container
 # ============================
-FROM eclipse-temurin:23-jre AS runtime
+FROM eclipse-temurin:21-jre AS runtime
 
 # Install Node 25 + ffmpeg + bash
 # Debian-based since Temurin uses Ubuntu/Debian

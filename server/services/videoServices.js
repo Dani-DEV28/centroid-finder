@@ -41,13 +41,26 @@ export const processVideoJob = (filename, targetColor, threshold) => {
     const jobId = uuidv4();
     const outputPath = path.join(RESULTS_DIR, `${jobId}_${filename}.csv`);
 
-    jobs[jobId] = { status: "processing", outputPath };
+    jobs[jobId] = { status: "processing", outputPath, logs: [] };
+
+    if (!fs.existsSync(inputPath)) {
+        jobs[jobId].status = "error";
+        jobs[jobId].error = `Input file does not exist: ${inputPath}`;
+        return { jobId };
+    }
     
     const child = spawn("java", ["-jar", JAR_PATH, inputPath, targetColor, threshold]);
 
-    if (!child) {
-        throw new Error("Failed to spawn Java process");
-    }
+    // if (!child) {
+    //     throw new Error("Failed to spawn Java process");
+    // }
+
+    // Safety: child process failed to start
+    child.on("error", (err) => {
+        console.error("JAR failed to start:", err);
+        jobs[jobId].status = "error";
+        jobs[jobId].error = err.message;
+    });
 
     // Capture stdout
     child.stdout.on("data", (data) => {
@@ -64,7 +77,15 @@ export const processVideoJob = (filename, targetColor, threshold) => {
     });
 
     // Wait for JAR to exit and CSV to exist
-    child.on("exit", async (code) => {
+    child.on("exit", async (code, signal) => {
+
+        // Catch JavaCV segfaults
+        if (signal) {
+            jobs[jobId].status = "error";
+            jobs[jobId].error = `JAR crashed with signal ${signal}`;
+            return;
+        }
+
         const waitForFile = async (file, retries = 20, delayMs = 200) => {
             for (let i = 0; i < retries; i++) {
                 if (fs.existsSync(file)) return true;
