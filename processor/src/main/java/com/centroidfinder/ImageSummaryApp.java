@@ -75,8 +75,8 @@ public class ImageSummaryApp {
 
         String outputDirCSV = "processor/sampleOutput/CSV/";
         new File(outputDirCSV).mkdirs();
-        
-        String filePathCSV = outputDirCSV + "groups_master.csv";
+
+        String filePathCSV = args.length > 2 ? args[2] : outputDirCSV + "groups_master.csv";
 
     try {
         // Count how many lines are already in the CSV to get next line index

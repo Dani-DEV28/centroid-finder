@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 public class frameExt {
-    public static void processVideo(String videoPath, String hexTargetColor, int threshold){
+    public static void processVideo(String videoPath, String hexTargetColor, int threshold, String outputPath) {
 
         try (FFmpegFrameGrabber grabber = new FFmpegFrameGrabber(videoPath);
             Java2DFrameConverter converter = new Java2DFrameConverter()){
@@ -19,9 +19,13 @@ public class frameExt {
             int frameRate = (int) Math.round(grabber.getFrameRate()); //read the video file metadata to retrieve FPS, while Math rounds to nearest integer
             int totalFrames = grabber.getLengthInFrames(); // get the total number of frames in the video to determine when to stop
 
-            String[] imageArgs = { hexTargetColor, String.valueOf(threshold) }; //setting up for the arguement
+            String format = grabber.getFormat();
+            boolean isImage = format != null && format.startsWith("image");
 
-            if(totalFrames <= 1){ // images
+            String[] imageArgs = { hexTargetColor, String.valueOf(threshold), outputPath }; //setting up for the arguement
+            
+
+            if(isImage){ // images
                 frame = grabber.grabImage();
                 if(frame != null){
                     frameExt.callingProcessor(converter, frame, imageArgs);

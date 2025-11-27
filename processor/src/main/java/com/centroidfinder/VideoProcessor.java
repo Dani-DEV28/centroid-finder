@@ -44,7 +44,7 @@ public class VideoProcessor {
         }
 
         try {
-            frameExt.processVideo(videoPath, hexTargetColor, threshold);
+            frameExt.processVideo(videoPath, hexTargetColor, threshold, outputPath);
             System.out.println("Frame extraction completed for video: " + videoPath);
             System.out.println("Output CSV: " + outputPath);
         } catch (Exception e) {

@@ -39,7 +39,7 @@ export const getVideoList = () => {
 export const processVideoJob = (filename, targetColor, threshold) => {
     const inputPath = path.join(VIDEO_DIR, filename);
     const jobId = uuidv4();
-    const outputPath = path.join(RESULTS_DIR, `${jobId}_${filename}.csv`);
+    const outputPath = path.join(RESULTS_DIR, `${jobId}.csv`);
 
     jobs[jobId] = { status: "processing", outputPath, logs: [] };
 
