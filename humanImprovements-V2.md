@@ -3,6 +3,7 @@
     - What improvements can you make to the design/architecture of your code?
         - Simplify the API design, to make it more readable and easier to troubleshoot
         - Enable the Java backend to recongnize Image is passed to the backend
+        - Docker: Currently was built with two file, being compose. But their issues with have the backend having it own port – ✅ finalize fix in commit: [`2eda90e`](https://github.com/Dani-DEV28/centroid-finder/commit/2eda90e23dba7fd4cdeff40c26d9fc5ce92fb3bc)
     - Where would additional Java interface be apporiate?
         - When looking to process just the thumbnail, sending it straingt to the `ImageSummaryApp`, as it would skip `VideoProcessor` and `frameExt`
     - How can you make things simpler, more-usable, and easier to maintain?
