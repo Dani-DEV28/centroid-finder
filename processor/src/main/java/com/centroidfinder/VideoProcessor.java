@@ -32,7 +32,7 @@ public class VideoProcessor {
             System.err.println("Failed to delete existing file: " + outputPath);
         }
 
-        try {
+        try { //Secondary Check when creating CSV File
             if (csvFile.createNewFile()) {
                 System.out.println("Created new file: " + outputPath);
             } else {

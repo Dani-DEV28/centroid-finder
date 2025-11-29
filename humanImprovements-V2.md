@@ -19,15 +19,15 @@
 
 - ## Improving Error Handling
     - What parts of your code are brittle? \
-        - `frameExt` if image file is passed instead of a video ✅
+        - `frameExt` if image file is passed instead of a video – ✅ [`8473217`](https://github.com/Dani-DEV28/centroid-finder/commit/8473217b1d940cf044971b504f6ec6acba201cb3)
         - 
     - How can you better be resolving/logging/surfacing errors?
         - `videoServices.js` add more error check points, with clear descripction of the issues
 
 - ## Writing Documentation
     - What portions of your code are missing Javadoc/JSdoc for the methods/classes?
-        - `frameExt.java`
-        - `VideoProcessor.java`
+        - `frameExt.java` – ✅ Added in [`1839117`](https://github.com/Dani-DEV28/centroid-finder/commit/1839117625c5973f51ca4d71f5fa74b6018bf5b0)
+        - `VideoProcessor.java`: Redundant CSV check in line 31-44
     - What documentation could be made clearer or improved?
         - `frameExt.java`
         - `VideoProcessor.java`
