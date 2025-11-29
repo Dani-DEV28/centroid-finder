@@ -13,7 +13,17 @@ public class VideoProcessorTest {
     }
 
     @Test
-    void test2() {
+    void emptyArgs() {
+        VideoProcessor empty = new VideoProcessor();
 
+        String err4Empty = "Usage: java VideoProcessor <videoPath> <hex_target_color> <threshold> [outputPath]";
+
+        assertEquals(empty, err4Empty);
+    }
+
+    @Test
+    void nonThresholdInt() {
+        String[] argument = {"salamanader.jpg", "FFA200", "Pizza"};
+        VideoProcessor incorrectThreshold = new VideoProcessor(argument);
     }
 }
