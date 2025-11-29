@@ -38,17 +38,8 @@ import java.util.List;
  * java ImageSummaryApp <input_image> <hex_target_color> <threshold>
  */
 public class ImageSummaryApp {
-    public static void main(BufferedImage image, String[] args) {
+    public static void main(BufferedImage image, String hexTargetColor, int threshold, String outputPath) {
         System.out.println("ISA boot");
-        
-        String hexTargetColor = args[0];
-        int threshold = 0; // related to try catch line 41-46
-        try {
-            threshold = Integer.parseInt(args[1]);
-        } catch (NumberFormatException e) {
-            System.err.println("Threshold must be an integer.");
-            return;
-        }
 
         // Parse the target color from a hex string (format RRGGBB) into a 24-bit
         // integer (0xRRGGBB)
@@ -73,20 +64,16 @@ public class ImageSummaryApp {
         // then locate connected groups of white pixels.
         List<Group> groups = groupFinder.findConnectedGroups(image);
 
-        String outputDirCSV = "processor/sampleOutput/CSV/";
-        new File(outputDirCSV).mkdirs();
-
-        String filePathCSV = args.length > 2 ? args[2] : outputDirCSV + "groups_master.csv";
-
+        // Write the groups to the CSV file.
     try {
         // Count how many lines are already in the CSV to get next line index
         long lineCount = 0;
-        File csvFile = new File(filePathCSV);
+        File csvFile = new File(outputPath);
         if (csvFile.exists()) {
             lineCount = Files.lines(csvFile.toPath()).count();
         }
 
-            try (PrintWriter writer = new PrintWriter(new FileWriter(filePathCSV, true))) {
+            try (PrintWriter writer = new PrintWriter(new FileWriter(outputPath, true))) {
                 if (!groups.isEmpty()) {
                     Group firstGroup = groups.get(0);
 

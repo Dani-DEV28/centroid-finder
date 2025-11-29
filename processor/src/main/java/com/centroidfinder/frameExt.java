@@ -22,13 +22,13 @@ public class frameExt {
             String format = grabber.getFormat();
             boolean isImage = format != null && format.startsWith("image");
 
-            String[] imageArgs = { hexTargetColor, String.valueOf(threshold), outputPath }; //setting up for the arguement
+            // String[] imageArgs = { hexTargetColor, String.valueOf(threshold), outputPath }; //setting up for the arguement
             
 
             if(isImage){ // images
                 frame = grabber.grabImage();
                 if(frame != null){
-                    frameExt.callingProcessor(converter, frame, imageArgs);
+                    frameExt.callingProcessor(converter, frame, hexTargetColor, threshold, outputPath);
                     System.out.println("✅ Processed single image file");
                 }
                 return;
@@ -36,7 +36,7 @@ public class frameExt {
 
             while ((frame = grabber.grabImage()) != null  && frameNumber < totalFrames) {
                 if (frameNumber % frameRate == 0) { // roughly 1 frame per second (if 30 FPS)
-                    frameExt.callingProcessor(converter, frame, imageArgs);
+                    frameExt.callingProcessor(converter, frame, hexTargetColor, threshold, outputPath);
                 }
                 frameNumber++;
             }
@@ -53,10 +53,10 @@ public class frameExt {
         }
     }
     
-    public static void callingProcessor(Java2DFrameConverter converter, Frame currentImg, String[] imageArgs){
+    public static void callingProcessor(Java2DFrameConverter converter, Frame currentImg, String hexTargetColor, int threshold, String outputPath){
         BufferedImage image = converter.convert(currentImg);
         // ✅ Call ImageSummaryApp on this saved frame
-        System.out.println("About to pass imageArgs: " + Arrays.toString(imageArgs));
-        ImageSummaryApp.main(image, imageArgs);
+        System.out.println("About to pass imageArgs: " + Arrays.toString(new String[]{ hexTargetColor, String.valueOf(threshold), outputPath }));
+        ImageSummaryApp.main(image, hexTargetColor, threshold, outputPath);
     }
 }
