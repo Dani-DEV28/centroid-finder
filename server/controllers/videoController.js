@@ -15,6 +15,22 @@ export const getVideos = (req, res) => {
     }
 };
 
+export const getImage = (req, res) => {
+    const { filename } = req.params;
+
+    const imagePath = path.join(videoDir, filename);
+
+    if (!fs.existsSync(imagePath)) {
+        return res.status(404).json({ error: "Image not found" });
+    }
+    
+    try {
+        res.status(200).json(imagePath);
+    } catch (err) {
+        res.status(500).json({ error: "Error reading video directory" });
+    }
+}
+
 export const checkJar = (req, res) => {
   try {
     if (!fs.existsSync(process.env.JAR_PATH))
@@ -47,6 +63,7 @@ export const getThumbnail = (req, res) => {
             filename: tmpName,
             folder: "/tmp" // temporary folder
         })
+        // .output(tmpPath)
         .on("end", function() {
             res.sendFile(tmpPath, err => {
                 if (err) res.status(500).json({ error: "Error generating thumbnail" });
