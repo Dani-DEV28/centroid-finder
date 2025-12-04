@@ -1,9 +1,10 @@
 import { Router } from 'express';
-import { getVideos, getThumbnail, processVideo, getStatus, checkJar} from '../controllers/videoController.js';
+import { getVideos, getThumbnail, processVideo, getStatus, checkJar, binarizerImg} from '../controllers/videoController.js';
 
 const router = Router();
 
 router.post('/process/:filename', processVideo);
+router.post('/img/:filename', binarizerImg);
 
 router.get('/api/health', checkJar);
 router.get('/videos', getVideos);

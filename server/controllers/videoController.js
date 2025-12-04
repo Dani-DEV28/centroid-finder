@@ -75,6 +75,27 @@ export const processVideo = (req, res) => {
     }
 };
 
+export const binarizerImg = (req, res) => {
+    const { filename } = req.params;
+    const { targetColor, threshold } = req.query;
+
+    if (!filename) {
+        return res.status(400).json({ error: "Missing filename parameter." });
+    }
+
+    if (!targetColor || !threshold) {
+        return res.status(400).json({ error: "Missing targetColor or threshold query parameter." });
+    }
+
+    try {
+        // const job = processVideoJob(filename, targetColor, parseInt(threshold, 10));
+        res.status(202).json({ message: "binarizerImg endpoint hit", filename, targetColor, threshold });
+    } catch (err) {
+        console.error("processVideo error:", err);
+        res.status(500).json({ error: "pV Error starting job", details: err.message });
+    }
+};
+
 export const getStatus = (req, res) => {
     const { jobId } = req.params;
     const status = getJobStatus(jobId);
