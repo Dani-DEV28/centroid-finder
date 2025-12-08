@@ -112,10 +112,16 @@ export const getJobStatus = (jobId) => {
     if (!job) return null;
 
     try {
-        // If the job has an output file and exists, mark as done
-        if (job.outputPath && fs.existsSync(job.outputPath)) {
+        // Check if frame extraction is complete in logs
+        const extractionComplete = job.logs && job.logs.some(log => 
+            log.includes("✅ Frame extraction complete.")
+        );
+        
+        // Update status to done only if extraction is complete
+        if (job.status === "processing" && extractionComplete) {
             job.status = "done";
         }
+        
         return {
             status: job.status,
             result: job.status === "done" ? job.outputPath : undefined,
