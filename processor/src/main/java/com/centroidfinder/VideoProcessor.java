@@ -11,9 +11,9 @@ public class VideoProcessor {
         } // can be ignore, but just checking is parameter are present
 
         String videoPath = args[0];
-        String hexTargetColor = args.length > 1 && !args[1].isEmpty() ? args[1] : "FFA200"; // default to orange if not provided
+        String hexTargetColor = args.length > 1 && !args[1].isEmpty() ? args[1] : "303e2f"; // default to orange if not provided
         
-        int threshold = 164; // default
+        int threshold = 60; // default
         if (args.length > 2) { // check for the presence of threshold argument, and parse it to integer
             try {
                 int parsed = Integer.parseInt(args[2]);
