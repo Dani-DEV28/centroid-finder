@@ -9,35 +9,18 @@ const JAR_PATH = process.env.JAR_PATH; // "/app/app.jar"
 const VIDEO_DIR = process.env.VIDEO_DIR;
 const RESULTS_DIR = process.env.RESULTS_DIR;
 
-
-// export const checkJar = () => {
-//     try {
-//         // Synchronously run `java -jar <JAR_PATH>` with no arguments to test if it executes
-//         const result = spawnSync('java', ['-jar', JAR_PATH], { encoding: 'utf-8' });
-
-//         if (result.error) {
-//             return { status: 'error', message: result.error.message };
-//         }
-
-//         // If the process prints usage info, consider it "ok"
-//         if (result.stdout.includes('Usage:') || result.stderr.includes('Usage:')) {
-//             return { status: 'ok', message: 'Java JAR is accessible and executable' };
-//         }
-
-//         // Any unexpected output can be returned for debugging
-//         return { status: 'ok', message: 'Java JAR executed successfully', stdout: result.stdout, stderr: result.stderr };
-//     } catch (err) {
-//         return { status: 'error', message: err.message };
-//     }
+// export const getVideoList = () => {
+//     const files = fs.readdirSync(VIDEO_DIR);
+//     return files;
 // };
 
-export const getVideoList = () => {
-    const files = fs.readdirSync(VIDEO_DIR);
-    return files;
-};
-
-export const getResultsList = () => {
-    const files = fs.readdirSync(RESULTS_DIR);
+export const getList = (option) => {
+    let files = [];
+    if(option === 0){
+        files = fs.readdirSync(RESULTS_DIR);
+    }else{
+        files = fs.readdirSync(VIDEO_DIR);
+    }
     return files;
 };
 
@@ -55,10 +38,6 @@ export const processVideoJob = (filename, targetColor, threshold) => {
     }
     
     const child = spawn("java", ["-jar", JAR_PATH, inputPath, targetColor, threshold, outputPath]);
-
-    // if (!child) {
-    //     throw new Error("Failed to spawn Java process");
-    // }
 
     // Safety: child process failed to start
     child.on("error", (err) => {
@@ -126,7 +105,6 @@ export const getJobStatus = (jobId) => {
         if (job.status === "processing" && extractionComplete) {
             job.status = "done";
         }
-        
         return {
             status: job.status,
             result: job.status === "done" ? job.outputPath : undefined,
