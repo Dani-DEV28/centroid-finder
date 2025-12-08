@@ -36,6 +36,11 @@ export const getVideoList = () => {
     return files;
 };
 
+export const getResultsList = () => {
+    const files = fs.readdirSync(RESULTS_DIR);
+    return files;
+};
+
 export const processVideoJob = (filename, targetColor, threshold) => {
     const inputPath = path.join(VIDEO_DIR, filename);
     const jobId = uuidv4();

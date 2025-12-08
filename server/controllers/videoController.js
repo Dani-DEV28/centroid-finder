@@ -1,4 +1,4 @@
-import { getVideoList, processVideoJob, getJobStatus } from '../services/videoServices.js';
+import { getVideoList, processVideoJob, getJobStatus, getResultsList } from '../services/videoServices.js';
 import fs from "fs";
 import ffmpeg from "fluent-ffmpeg";
 import path from "path";
@@ -12,6 +12,15 @@ export const getVideos = (req, res) => {
         res.status(200).json(videos);
     } catch (err) {
         res.status(500).json({ error: "Error reading video directory" });
+    }
+};
+
+export const getResults = (req, res) => {
+    try {
+        const videos = getResultsList();
+        res.status(200).json(videos);
+    } catch (err) {
+        res.status(500).json({ error: "Error reading result directory" });
     }
 };
 
