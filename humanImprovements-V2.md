@@ -5,7 +5,7 @@
         - Enable the Java backend to recongnize Image is passed to the backend
         - Docker: Currently was built with two file, being compose. But their issues with have the backend having it own port – ✅ finalize fix in commit: [`2eda90e`](https://github.com/Dani-DEV28/centroid-finder/commit/2eda90e23dba7fd4cdeff40c26d9fc5ce92fb3bc)
         - `Processor/`, as the current String argument pass is making it difficult to test
-        - `getVideos` and `getResult` merge into a single function called `getList`
+        - `getVideos` and `getResult` merge into a single function called `getList`  – ✅ updated: [`2eda90e`](https://github.com/Dani-DEV28/centroid-finder/commit/1b07b390be1853bf163b1bf949b4860d7491c30c)
     - Where would additional Java interface be apporiate?
         - When looking to process just the thumbnail, sending it straingt to the `ImageSummaryApp`, as it would skip `VideoProcessor` and `frameExt`
     - How can you make things simpler, more-usable, and easier to maintain?
@@ -38,3 +38,5 @@
     - Are there sections of dead code that are commented out?
         - `EuclideanColorDistance.java`
         - `videoServices.js`
+        - `binarizerImg` func in the `server`
+        - `getImage` func in the `server`

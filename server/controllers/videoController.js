@@ -24,21 +24,21 @@ export const getResults = (req, res) => {
     }
 };
 
-export const getImage = (req, res) => {
-    const { filename } = req.params;
+// export const getImage = (req, res) => {
+//     const { filename } = req.params;
 
-    const imagePath = path.join(videoDir, filename);
+//     const imagePath = path.join(videoDir, filename);
 
-    if (!fs.existsSync(imagePath)) {
-        return res.status(404).json({ error: "Image not found" });
-    }
+//     if (!fs.existsSync(imagePath)) {
+//         return res.status(404).json({ error: "Image not found" });
+//     }
     
-    try {
-        res.status(200).json(imagePath);
-    } catch (err) {
-        res.status(500).json({ error: "Error reading video directory" });
-    }
-}
+//     try {
+//         res.status(200).json(imagePath);
+//     } catch (err) {
+//         res.status(500).json({ error: "Error reading video directory" });
+//     }
+// }
 
 export const checkJar = (req, res) => {
   try {
@@ -88,23 +88,6 @@ export const processVideo = (req, res) => {
     const { filename } = req.params;
     const { targetColor, threshold } = req.query;
 
-    if (!targetColor || !threshold) {
-        return res.status(400).json({ error: "Missing targetColor or threshold query parameter." });
-    }
-
-    try {
-        const job = processVideoJob(filename, targetColor, parseInt(threshold, 10));
-        res.status(202).json(job);
-    } catch (err) {
-        console.error("processVideo error:", err);
-        res.status(500).json({ error: "pV Error starting job", details: err.message });
-    }
-};
-
-export const binarizerImg = (req, res) => {
-    const { filename } = req.params;
-    const { targetColor, threshold } = req.query;
-
     if (!filename) {
         return res.status(400).json({ error: "Missing filename parameter." });
     }
@@ -114,8 +97,8 @@ export const binarizerImg = (req, res) => {
     }
 
     try {
-        // const job = processVideoJob(filename, targetColor, parseInt(threshold, 10));
-        res.status(202).json({ message: "binarizerImg endpoint hit", filename, targetColor, threshold });
+        const job = processVideoJob(filename, targetColor, parseInt(threshold, 10));
+        res.status(202).json(job);
     } catch (err) {
         console.error("processVideo error:", err);
         res.status(500).json({ error: "pV Error starting job", details: err.message });
