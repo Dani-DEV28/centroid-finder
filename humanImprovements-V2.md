@@ -40,3 +40,4 @@
         - `videoServices.js`
         - `binarizerImg` func in the `server`
         - `getImage` func in the `server`
+        - `frameExt` section to detect img <- No longer needed

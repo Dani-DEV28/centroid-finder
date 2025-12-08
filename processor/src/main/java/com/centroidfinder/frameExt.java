@@ -19,20 +19,20 @@ public class frameExt {
             int frameRate = (int) Math.round(grabber.getFrameRate()); //read the video file metadata to retrieve FPS, while Math rounds to nearest integer
             int totalFrames = grabber.getLengthInFrames(); // get the total number of frames in the video to determine when to stop
 
-            String format = grabber.getFormat();
-            boolean isImage = format != null && format.startsWith("image");
+            // String format = grabber.getFormat();
+            // boolean isImage = format != null && format.startsWith("image");
 
             // String[] imageArgs = { hexTargetColor, String.valueOf(threshold), outputPath }; //setting up for the arguement
             
 
-            if(isImage){ // images
-                frame = grabber.grabImage();
-                if(frame != null){
-                    frameExt.callingProcessor(converter, frame, hexTargetColor, threshold, outputPath);
-                    System.out.println("✅ Processed single image file");
-                }
-                return;
-            }
+            // if(isImage){ // images
+            //     frame = grabber.grabImage();
+            //     if(frame != null){
+            //         frameExt.callingProcessor(converter, frame, hexTargetColor, threshold, outputPath);
+            //         System.out.println("✅ Processed single image file");
+            //     }
+            //     return;
+            // }
 
             while ((frame = grabber.grabImage()) != null  && frameNumber < totalFrames) {
                 if (frameNumber % frameRate == 0) { // roughly 1 frame per second (if 30 FPS)
