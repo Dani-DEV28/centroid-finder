@@ -14,8 +14,9 @@ app.use(cors());
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use('/videos', express.static(VIDEO_DIR));
-app.use('/results', express.static(RESULTS_DIR));
+
+app.use('/videos', express.static(VIDEO_DIR)); //access img in the video dir
+app.use('/results', express.static(RESULTS_DIR)); //enable download csv from results dir
 
 app.use('/', videoRouter);
 
