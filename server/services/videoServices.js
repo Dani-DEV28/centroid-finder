@@ -1,5 +1,4 @@
 import fs from 'fs';
-// import path from 'path';
 import { spawn } from 'child_process';
 import { v4 as uuidv4 } from 'uuid';
 import { jobs } from '../utils/jobManager.js';
@@ -9,16 +8,12 @@ const JAR_PATH = process.env.JAR_PATH; // "/app/app.jar"
 const VIDEO_DIR = process.env.VIDEO_DIR;
 const RESULTS_DIR = process.env.RESULTS_DIR;
 
-// export const getVideoList = () => {
-//     const files = fs.readdirSync(VIDEO_DIR);
-//     return files;
-// };
 
 export const getList = (option) => {
     let files = [];
-    if(option === 0){
+    if (option === 0) {
         files = fs.readdirSync(RESULTS_DIR);
-    }else{
+    } else {
         files = fs.readdirSync(VIDEO_DIR);
     }
     return files;
@@ -36,7 +31,7 @@ export const processVideoJob = (filename, targetColor, threshold) => {
         jobs[jobId].error = `Input file does not exist: ${inputPath}`;
         return { jobId };
     }
-    
+
     const child = spawn("java", ["-jar", JAR_PATH, inputPath, targetColor, threshold, outputPath]);
 
     // Safety: child process failed to start
@@ -97,10 +92,10 @@ export const getJobStatus = (jobId) => {
 
     try {
         // Check if frame extraction is complete in logs
-        const extractionComplete = job.logs && job.logs.some(log => 
+        const extractionComplete = job.logs && job.logs.some(log =>
             log.includes("✅ Frame extraction complete.")
         );
-        
+
         // Update status to done only if extraction is complete
         if (job.status === "processing" && extractionComplete) {
             job.status = "done";
